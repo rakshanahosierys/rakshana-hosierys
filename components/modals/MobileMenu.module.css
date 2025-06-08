@@ -1,0 +1,119 @@
+/* Add these styles to your global CSS file or a new MobileMenu.module.css */
+
+/* Spinner for loading auth state in mobile menu */
+.mobile-menu-spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #3498db; /* Blue spinner */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px; /* Adjust spacing */
+}
+
+/* Container for the user menu and its dropdown */
+.mobile-user-menu-container {
+  position: relative;
+  display: flex; /* To align icon and text */
+  align-items: center;
+  /* Inherit site-nav-icon styles or add specific ones */
+}
+
+/* Trigger for the user dropdown */
+.mobile-user-menu-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between icon/avatar and name */
+  cursor: pointer;
+  padding: 10px 0; /* Adjust padding to fit your mobile menu design */
+  color: inherit; /* Inherit text color from parent */
+  text-decoration: none;
+  width: 100%; /* Make the clickable area wider */
+}
+
+.mobile-avatar-image {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.mobile-user-name {
+  font-weight: 500;
+  flex-grow: 1; /* Allow name to take available space */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Dropdown arrow for mobile menu */
+.mobile-dropdown-arrow {
+  font-size: 0.7em;
+  transition: transform 0.2s ease;
+  margin-left: auto; /* Push arrow to the right */
+}
+
+.mobile-dropdown-arrow.arrow-down::before { content: '▼'; }
+.mobile-dropdown-arrow.arrow-up::before { content: '▲'; }
+
+/* Dropdown menu for authenticated user in mobile */
+.mobile-user-dropdown-menu {
+  position: absolute;
+  top: 100%; /* Position below the trigger */
+  left: 0; /* Align to the left of its container */
+  width: 100%; /* Take full width of its container */
+  background-color: #fff; /* Or your mobile menu background color */
+  border-top: 1px solid #eee; /* Separator from trigger */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  z-index: 10; /* Ensure it's above other mobile menu content */
+  animation: slideInDown 0.2s ease-out; /* Simple animation */
+}
+
+.mobile-user-dropdown-menu li {
+  padding: 0;
+}
+
+.mobile-user-dropdown-menu a,
+.mobile-user-dropdown-menu button {
+  display: block;
+  width: 100%;
+  padding: 12px 20px; /* Adjust padding for mobile links */
+  color: #333;
+  text-decoration: none;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.mobile-user-dropdown-menu a:hover,
+.mobile-user-dropdown-menu button:hover {
+  background-color: #f0f0f0;
+  color: #007bff; /* Or your brand color */
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Ensure existing .site-nav-icon styles are compatible or adjust */
+.site-nav-icon {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between icon and text */
+  padding: 10px 0; /* Example padding */
+  color: #333; /* Example color */
+  text-decoration: none;
+}

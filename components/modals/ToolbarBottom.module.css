@@ -1,0 +1,137 @@
+/* components/ToolbarBottom/ToolbarBottom.module.css */
+
+/* Spinner for loading auth state */
+.spinner {
+  width: 24px; /* Match icon size */
+  height: 24px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #3498db; /* Blue spinner */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  display: block; /* To center it if needed */
+  margin: 0 auto; /* Center horizontally in toolbar-icon */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Wrapper for the spinner and its label */
+.spinnerWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  padding: 5px;
+  color: #555; /* Text color for loading state */
+  font-size: 0.75rem; /* Match toolbar-label font size */
+}
+
+/* Container for the dropdown to manage positioning */
+.accountDropdownContainer {
+  position: relative; /* Crucial for positioning the dropdown menu */
+  /* Ensure no conflicting z-index, transform, opacity, filter here */
+}
+
+/* Styles for the clickable user menu (avatar + name) for both logged-in and logged-out states */
+.userMenu {
+  display: flex;
+  flex-direction: column; /* Stack icon/avatar and label vertically */
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  height: 100%; /* Take full height of toolbar-item */
+  width: 100%; /* Take full width of toolbar-item */
+  padding: 5px; /* Adjust padding as needed */
+  text-decoration: none; /* Ensure no underline if it's a div acting as a link */
+  color: inherit; /* Inherit text color */
+  transition: background-color 0.2s ease, color 0.2s ease; /* Smooth hover effects */
+}
+
+.userMenu:hover {
+  background-color: #f0f0f0; /* Example hover background */
+  color: #007bff; /* Example hover text color */
+}
+
+/* Avatar styling */
+.avatarImage {
+  width: 24px; /* Match toolbar-icon size */
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 2px; /* Space between avatar and label */
+}
+
+/* Custom toolbar label for user name to handle overflow */
+.toolbarLabel {
+  font-size: 0.75rem; /* Adjust font size to fit toolbar */
+  white-space: nowrap; /* Prevent name from wrapping */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Add ellipsis for long names */
+  max-width: 100%; /* Ensure it respects parent width */
+}
+
+/* Ensure the entire toolbar is above other content */
+.tf-toolbar-bottom { /* This class is defined in your main component div */
+  position: relative; /* It usually already has this, but explicitly ensure it */
+  z-index: 99999; /* Make this extremely high, higher than the dropdown itself */
+}
+
+/* Dropdown menu styling */
+.dropdownMenu {
+  position: absolute;
+  top: calc(100% + 10px); /* Position 10px BELOW the toolbar-item */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Adjust for centering */
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  min-width: 150px;
+  list-style: none;
+  padding: 10px 0;
+  margin: 0;
+  z-index: 100; /* This can be 100, 1000, or 9999. It just needs to be higher than other siblings within .accountDropdownContainer */
+  animation: fadeInDown 0.2s ease-out;
+}
+
+
+.dropdownMenu li {
+  padding: 0;
+}
+
+.dropdownMenu a,
+.dropdownMenu button {
+  display: block;
+  width: 100%;
+  padding: 10px 15px;
+  color: #333;
+  text-decoration: none;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.9rem; /* Adjust font size for dropdown items */
+  font-weight: 500;
+}
+
+.dropdownMenu a:hover,
+.dropdownMenu button:hover {
+  background-color: #f0f0f0;
+  color: #007bff; /* Or your brand color */
+}
+
+/* New animation for dropdown appearing downwards */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -10px); /* Starts slightly above and moves down */
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}

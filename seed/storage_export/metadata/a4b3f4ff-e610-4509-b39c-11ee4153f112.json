@@ -1,0 +1,19 @@
+{
+  "name": "categories/cate1.jpg",
+  "bucket": "rakshana-hosierys.firebasestorage.app",
+  "metageneration": 1,
+  "generation": 1748367747404,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "aa4b957b-85a6-4be4-9ca7-351a1f3ec3a4"
+  ],
+  "etag": "g0gmHDDUkNE3IWkdH34fvShYmHU",
+  "customMetadata": {},
+  "timeCreated": "2025-05-27T17:42:27.404Z",
+  "updated": "2025-05-27T17:42:27.404Z",
+  "size": 7962,
+  "md5Hash": "zplczLlo31XSAeuwZNgInQ==",
+  "crc32c": "2668330425"
+}
