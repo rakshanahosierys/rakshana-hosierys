@@ -1,7 +1,10 @@
 // app/api/phonepe-initiate-payment/route.js
 import { NextResponse } from 'next/server';
-import { doc, getDoc, updateDoc } from 'firebase/firestore'; // For Firestore interactions
-import { db } from '@/utlis/firebaseConfig'; // Your Firestore instance
+import { adminDb } from '@/utlis/firebaseAdmin'; // <--- IMPORT ADMIN DB HERE
+// Remove the client-side imports:
+// import { doc, getDoc, updateDoc } from 'firebase/firestore'; // NO LONGER NEEDED
+// import { db } from '@/utlis/firebaseConfig'; // NO LONGER NEEDED
+
 import CryptoJS from 'crypto-js'; // For SHA256 hashing
 import { v4 as uuidv4 } from 'uuid'; // For generating unique transaction IDs if needed
 
@@ -23,14 +26,15 @@ export async function POST(request) {
     }
 
     // 1. Fetch order details from Firestore to get the accurate amount and status
-    const orderRef = doc(db, 'orders', orderId);
-    const orderSnap = await getDoc(orderRef);
+    // Use adminDb for Firestore interactions
+    const orderRef = adminDb.collection('orders').doc(orderId); // Admin SDK way
+    const orderSnap = await orderRef.get(); // Admin SDK way
 
-    if (!orderSnap.exists()) {
+    if (!orderSnap.exists) { // Admin SDK uses .exists, not .exists()
       return NextResponse.json({ message: 'Order not found.' }, { status: 404 });
     }
 
-    const orderData = orderSnap.data();
+    const orderData = orderSnap.data(); // Admin SDK uses .data()
 
     // Ensure order is in a state ready for payment (e.g., 'Pending')
     if (orderData.paymentStatus && orderData.paymentStatus !== 'Pending') {
@@ -44,10 +48,10 @@ export async function POST(request) {
     const merchantTransactionId = `T${orderId}-${Date.now()}`; // Example: T_yourOrderId_timestamp
 
     // Update the order in Firestore with the new PhonePe transaction ID and set status to 'Initiated'
-    await updateDoc(orderRef, {
-        merchantTransactionId: merchantTransactionId, // Store the PhonePe transaction ID
-        paymentStatus: 'Initiated', // Mark as initiated
-        updatedAt: new Date(),
+    await orderRef.update({ // Admin SDK way to update
+      merchantTransactionId: merchantTransactionId, // Store the PhonePe transaction ID
+      paymentStatus: 'Initiated', // Mark as initiated
+      updatedAt: new Date(),
     });
 
     const paymentPayload = {
