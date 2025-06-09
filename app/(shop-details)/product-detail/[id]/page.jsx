@@ -1,100 +1,39 @@
 // app/(shop-details)/product-detail/[id]/page.js
-'use client'; // This directive makes this a Client Component
-
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
 import Footer1 from "@/components/footers/Footer1";
 import Header7 from "@/components/headers/Header7";
+
 import Products from "@/components/shopDetails/Products";
 import RecentProducts from "@/components/shopDetails/RecentProducts";
 import ShopDetailsTab from "@/components/shopDetails/ShopDetailsTab";
+import React from "react";
+import Link from "next/link";
 import DetailsOuterZoom from "@/components/shopDetails/DetailsOuterZoom";
-import ProductReviews from "@/components/shopDetails/ProductReviews";
-import ProductSinglePrevNext from "@/components/common/ProductSinglePrevNext";
+// Import adminDb from the centralized utility file
+import { adminDb } from '@/utlis/firebaseAdmin';
+import ProductReviews from "@/components/shopDetails/ProductReviews"; // Import the ProductReviews component
 
-// Import the client-side Firebase and Firestore specific functions
-import { db } from '@/utlis/firebaseConfig'; // Client-side Firebase configuration
-import { doc, getDoc } from "firebase/firestore"; // Firestore functions for client-side
-
-// Metadata is typically for Server Components and might not be fully utilized here
-// However, Next.js can still process it for static exports or initial server render.
 export const metadata = {
   title: "Tinkle Classy Girls Frocks & Dresses - Classy Fox",
   description: "Classy Fox - Rakshana Hosierys",
 };
+import ProductSinglePrevNext from "@/components/common/ProductSinglePrevNext";
 
-export default function Page({ params }) {
-  const { id } = params;
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    // Define an async function to fetch product data
-    const fetchProduct = async () => {
-      try {
-        setLoading(true); // Set loading to true when starting fetch
-        setError(null); // Clear previous errors
+export default async function Page({ params }) { // Renamed 'page' to 'Page' for convention
+  const { id } = params; // No await needed for params
 
-        const docRef = doc(db, "products", id); // Get reference to the document
-        const docSnap = await getDoc(docRef); // Fetch the document snapshot
+  // Use adminDb for Firestore operations in this Server Component
+  const docRef = adminDb.collection("products").doc(id);
+  const docSnap = await docRef.get();
 
-        if (docSnap.exists()) {
-          const productData = docSnap.data();
-          setProduct({
-            ...productData,
-            id: docSnap.id, // Ensure the ID is included
-            // Safely convert Firestore Timestamps to ISO strings for client-side use
-            productCreatedAt: productData.productCreatedAt?.toDate ? productData.productCreatedAt.toDate().toISOString() : null,
-            countdown: productData.countdown?.toDate ? productData.countdown.toDate().toISOString() : null
-          });
-        } else {
-          setProduct(null); // Product not found
-        }
-      } catch (err) {
-        console.error("Error fetching product:", err);
-        setError("Failed to load product. Please try again."); // Set error state
-      } finally {
-        setLoading(false); // Set loading to false once fetching is complete (success or error)
-      }
-    };
-
-    if (id) {
-      fetchProduct(); // Call the fetch function if ID is available
-    }
-  }, [id]); // Re-run effect if the product ID changes
-
-  if (loading) {
+  if (!docSnap.exists) {
+    // Handle the case where the product is not found
     return (
       <>
         <Header7 />
-        <div className="container py-10 text-center">
-          <p>Loading product details...</p>
-        </div>
-        <Footer1 />
-      </>
-    );
-  }
-
-  if (error) {
-    return (
-      <>
-        <Header7 />
-        <div className="container py-10 text-center text-red-500">
-          <p>{error}</p>
-        </div>
-        <Footer1 />
-      </>
-    );
-  }
-
-  if (!product) {
-    return (
-      <>
-        <Header7 />
-        <div className="container py-10 text-center">
-          <h1 className="text-xl font-bold">Product not found.</h1>
-          <p className="mt-4">
+        <div className="container py-10">
+          <h1 className="text-xl font-bold text-center">Product not found.</h1>
+          <p className="text-center mt-4">
             <Link href="/shop-default" className="text-blue-600 hover:underline">
               Go back to Shop
             </Link>
@@ -104,6 +43,16 @@ export default function Page({ params }) {
       </>
     );
   }
+
+  const productData = docSnap.data();
+
+  const product = {
+    ...productData,
+    id,
+    // Safely convert Firestore Timestamps to ISO strings
+    productCreatedAt: productData.productCreatedAt?.toDate ? productData.productCreatedAt.toDate().toISOString() : null,
+    countdown: productData.countdown?.toDate ? productData.countdown.toDate().toISOString() : null
+  };
 
   return (
     <>
@@ -129,9 +78,10 @@ export default function Page({ params }) {
         </div>
       </div>
       <DetailsOuterZoom product={product} />
-      <ShopDetailsTab product={product} />
+      <ShopDetailsTab product={product}/>
       <div className="container">
-        {/* ProductReviews will also need to be a Client Component if it fetches data using client-side Firestore */}
+        {/* If ProductReviews also fetches Firestore data, ensure it's a Client Component
+            or uses Admin SDK if it's a Server Component doing the fetching. */}
         <ProductReviews productId={product.id} />
       </div>
       <br />
