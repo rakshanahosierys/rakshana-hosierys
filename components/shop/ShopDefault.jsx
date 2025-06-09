@@ -69,9 +69,8 @@ export default function ShopDefault() {
               {layouts.map((layout, index) => (
                 <li
                   key={index}
-                  className={`tf-view-layout-switch ${layout.className} ${
-                    gridItems === layout.dataValueGrid ? 'active' : ''
-                  }`}
+                  className={`tf-view-layout-switch ${layout.className} ${gridItems === layout.dataValueGrid ? 'active' : ''
+                    }`}
                   onClick={() => setGridItems(layout.dataValueGrid)}
                 >
                   <div className="item">
@@ -87,7 +86,14 @@ export default function ShopDefault() {
             </div>
           </div>
           <div className="wrapper-control-shop">
-            <ProductGrid allproducts={paginatedProducts} gridItems={gridItems} onClearFilter={() => shopFilterRef.current?.clearFilter()}/>
+            {paginatedProducts.length === 0 ? (
+              <div className="no-products-message text-center py-5">
+                <h3>No products found!</h3>
+                <p>Please check back later or adjust your filters.</p>
+              </div>
+            ) : (
+              <ProductGrid allproducts={paginatedProducts} gridItems={gridItems} onClearFilter={() => shopFilterRef.current?.clearFilter()} />
+            )}
 
             {finalSorted.length > itemsPerPage && (
               <ul className="tf-pagination-wrap tf-pagination-list tf-pagination-btn">
