@@ -23,7 +23,6 @@ let functionsInstance;
 
 if (!getApps().length) {
     try {
-        console.log('Firebase Client Config used:', firebaseClientConfig);
         app = initializeApp(firebaseClientConfig);
         auth = getAuth(app);
         db = getFirestore(app);
