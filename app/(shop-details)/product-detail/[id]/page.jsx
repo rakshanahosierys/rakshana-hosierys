@@ -8,9 +8,8 @@ import ShopDetailsTab from "@/components/shopDetails/ShopDetailsTab";
 import React from "react";
 import Link from "next/link";
 import DetailsOuterZoom from "@/components/shopDetails/DetailsOuterZoom";
-// import { doc, getDoc } from "firebase/firestore"; // REMOVE CLIENT-SIDE IMPORTS
-// import { db } from "@/utlis/firebaseConfig";      // REMOVE CLIENT-SIDE IMPORTS
-import { adminDb } from '@/utlis/firebaseAdmin'; // <--- IMPORT ADMIN DB HERE
+// Import adminDb from the centralized utility file
+import { adminDb } from '@/utlis/firebaseAdmin';
 import ProductReviews from "@/components/shopDetails/ProductReviews"; // Import the ProductReviews component
 
 export const metadata = {
@@ -20,27 +19,37 @@ export const metadata = {
 import ProductSinglePrevNext from "@/components/common/ProductSinglePrevNext";
 
 
-export default async function page({ params }) {
-  const { id } = await params;
+export default async function Page({ params }) { // Renamed 'page' to 'Page' for convention
+  const { id } = params; // No await needed for params
 
   // Use adminDb for Firestore operations in this Server Component
-  const docRef = adminDb.collection("products").doc(id); // Admin SDK way
-  const docSnap = await docRef.get(); // Admin SDK way
+  const docRef = adminDb.collection("products").doc(id);
+  const docSnap = await docRef.get();
 
-  if (!docSnap.exists) { // Admin SDK uses .exists property
-    return <div>Product not found</div>;
+  if (!docSnap.exists) {
+    // Handle the case where the product is not found
+    return (
+      <>
+        <Header7 />
+        <div className="container py-10">
+          <h1 className="text-xl font-bold text-center">Product not found.</h1>
+          <p className="text-center mt-4">
+            <Link href="/shop-default" className="text-blue-600 hover:underline">
+              Go back to Shop
+            </Link>
+          </p>
+        </div>
+        <Footer1 />
+      </>
+    );
   }
 
-  const productData = docSnap.data(); // Admin SDK uses .data() method
+  const productData = docSnap.data();
 
   const product = {
     ...productData,
     id,
-    // Ensure these fields are handled safely, as they might be Firestore Timestamps
-    // toDate() is a method of Firestore Timestamp objects.
-    // If productData.productCreatedAt or countdown are not Timestamps, toDate() will cause an error.
-    // It's safer to check their type or ensure they are always Timestamps.
-    // For now, assuming they are Firestore Timestamps:
+    // Safely convert Firestore Timestamps to ISO strings
     productCreatedAt: productData.productCreatedAt?.toDate ? productData.productCreatedAt.toDate().toISOString() : null,
     countdown: productData.countdown?.toDate ? productData.countdown.toDate().toISOString() : null
   };
