@@ -1,4 +1,7 @@
 // app/(shop-details)/product-detail/[id]/page.js
+// This is a Server Component as there is no 'use client' directive.
+// It will fetch data on the server side before rendering.
+
 import Footer1 from "@/components/footers/Footer1";
 import Header7 from "@/components/headers/Header7";
 
@@ -8,7 +11,7 @@ import ShopDetailsTab from "@/components/shopDetails/ShopDetailsTab";
 import React from "react";
 import Link from "next/link";
 import DetailsOuterZoom from "@/components/shopDetails/DetailsOuterZoom";
-// Import adminDb from the centralized utility file
+// Import adminDb from the centralized utility file for server-side operations
 import { adminDb } from '@/utlis/firebaseAdmin';
 import ProductReviews from "@/components/shopDetails/ProductReviews"; // Import the ProductReviews component
 
@@ -19,20 +22,52 @@ export const metadata = {
 import ProductSinglePrevNext from "@/components/common/ProductSinglePrevNext";
 
 
-export default async function Page({ params }) { // Renamed 'page' to 'Page' for convention
-  const { id } = params; // No await needed for params
+export default async function Page({ params }) {
+  const { id } = params;
 
-  // Use adminDb for Firestore operations in this Server Component
-  const docRef = adminDb.collection("products").doc(id);
-  const docSnap = await docRef.get();
+  let product = null; // Initialize product to null
+  let errorFetching = false; // Flag to track fetching errors
 
-  if (!docSnap.exists) {
-    // Handle the case where the product is not found
+  try {
+    // Use adminDb for Firestore operations in this Server Component
+    const docRef = adminDb.collection("products").doc(id);
+    const docSnap = await docRef.get();
+
+    if (docSnap.exists) {
+      const productData = docSnap.data();
+
+      // Ensure ALL Firestore Timestamp objects are converted to serializable formats.
+      // This is crucial for passing data from Server Components to Client Components.
+      product = {
+        ...productData,
+        id,
+        // Convert productCreatedAt Timestamp to ISO string
+        productCreatedAt: productData.productCreatedAt?.toDate ? productData.productCreatedAt.toDate().toISOString() : null,
+        // Convert countdown Timestamp to ISO string
+        countdown: productData.countdown?.toDate ? productData.countdown.toDate().toISOString() : null,
+        // Convert updatedAt Timestamp to ISO string (this was the source of the error)
+        updatedAt: productData.updatedAt?.toDate ? productData.updatedAt.toDate().toISOString() : null,
+        // Add any other Timestamp fields if they exist in your product data:
+        // createdAt: productData.createdAt?.toDate ? productData.createdAt.toDate().toISOString() : null,
+        // someOtherDateField: productData.someOtherDateField?.toDate ? productData.someOtherDateField.toDate().toISOString() : null,
+      };
+    } else {
+      // Product not found, product remains null
+    }
+  } catch (e) {
+    console.error("Server-side product fetch error:", e);
+    errorFetching = true; // Set error flag
+  }
+
+  // Handle product not found or error cases
+  if (errorFetching || !product) {
     return (
       <>
         <Header7 />
-        <div className="container py-10">
-          <h1 className="text-xl font-bold text-center">Product not found.</h1>
+        <div className="container py-10 text-center">
+          <h1 className="text-xl font-bold">
+            {errorFetching ? "Error loading product data." : "Product not found."}
+          </h1>
           <p className="text-center mt-4">
             <Link href="/shop-default" className="text-blue-600 hover:underline">
               Go back to Shop
@@ -43,16 +78,6 @@ export default async function Page({ params }) { // Renamed 'page' to 'Page' for
       </>
     );
   }
-
-  const productData = docSnap.data();
-
-  const product = {
-    ...productData,
-    id,
-    // Safely convert Firestore Timestamps to ISO strings
-    productCreatedAt: productData.productCreatedAt?.toDate ? productData.productCreatedAt.toDate().toISOString() : null,
-    countdown: productData.countdown?.toDate ? productData.countdown.toDate().toISOString() : null
-  };
 
   return (
     <>
@@ -80,8 +105,7 @@ export default async function Page({ params }) { // Renamed 'page' to 'Page' for
       <DetailsOuterZoom product={product} />
       <ShopDetailsTab product={product}/>
       <div className="container">
-        {/* If ProductReviews also fetches Firestore data, ensure it's a Client Component
-            or uses Admin SDK if it's a Server Component doing the fetching. */}
+        {/* ProductReviews is a Client Component, it can receive serializable props. */}
         <ProductReviews productId={product.id} />
       </div>
       <br />
