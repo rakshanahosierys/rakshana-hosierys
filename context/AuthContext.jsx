@@ -21,6 +21,13 @@ export function AuthProvider({ children }) {
 
   // Firebase's built-in observer for authentication state changes
   useEffect(() => {
+    // Ensure 'auth' instance is available before subscribing to auth state changes
+    if (!auth) {
+      console.error("Firebase Auth instance is undefined. AuthContext cannot initialize.");
+      setLoading(false); // Make sure to stop loading even if auth is not available
+      return; // Exit if auth is not ready
+    }
+    
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       setUser(firebaseUser); // firebaseUser will be null if not logged in
       setLoading(false); // Auth state determined
