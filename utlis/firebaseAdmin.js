@@ -8,7 +8,7 @@ if (!admin.apps.length) {
   // You can also explicitly set projectId from env if needed.
   admin.initializeApp({
     credential: admin.credential.applicationDefault(),
-    projectId: process.env.FIREBASE_PROJECT_ID // This will be injected by Firebase App Hosting
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID // This will be injected by Firebase App Hosting
   });
 }
 
