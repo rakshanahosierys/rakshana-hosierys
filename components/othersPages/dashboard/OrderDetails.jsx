@@ -330,6 +330,9 @@ export default function OrderDetails({ orderId }) { // Receive orderId as a prop
           )}
         </div>
       </div>
+      <p className="text-2 text_red-1">
+        Note: Please contact us within 48 hours of order confirmation to cancel the order.
+      </p>
     </div>
   );
 }

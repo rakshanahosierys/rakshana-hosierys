@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 export default function Cart() {
   const [agreed, setAgreed] = useState(true);
-  const { cartProducts, setCartProducts, totalPrice } = useContextElement();
+  const { cartProducts, setCartProducts, totalPrice, orderNotes, setOrderNotes } = useContextElement();
   const setQuantity = (productId, quantity, selectedColor, selectedSize) => {
     if (quantity >= 1) {
       setCartProducts((prev) =>
@@ -204,10 +204,11 @@ export default function Cart() {
               <div className="tf-page-cart-note">
                 <label htmlFor="cart-note">Add Order Note</label>
                 <textarea
+                  value={orderNotes}
+                  onChange={(e) => setOrderNotes(e.target.value)}
                   name="note"
                   id="cart-note"
                   placeholder="How can we help you?"
-                  defaultValue={""}
                 />
               </div>
             </form>
@@ -246,17 +247,6 @@ export default function Cart() {
                 </div>
               </div>
               <div className="tf-page-cart-checkout">
-                <div className="cart-checkbox">
-                  <input
-                    type="checkbox"
-                    className="tf-check"
-                    id="cart-gift-checkbox"
-                  />
-                  <label htmlFor="cart-gift-checkbox" className="fw-4">
-                    <span>Do you want a gift wrap?</span> Only
-                    <span className="fw-5"> ₹ 5.00</span>
-                  </label>
-                </div>
                 <div className="tf-cart-totals-discounts">
                   <h3>Subtotal</h3>
                   <span className="total-value">

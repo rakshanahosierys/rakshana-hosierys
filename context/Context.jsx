@@ -1,10 +1,11 @@
 "use client";
 import { allProducts } from "@/data/products";
 import { openCartModal } from "@/utlis/openCartModal";
-// import { openCart } from "@/utlis/toggleCart";
 import React, { useEffect } from "react";
 import { useContext, useState } from "react";
+
 const dataContext = React.createContext();
+
 export const useContextElement = () => {
   return useContext(dataContext);
 };
@@ -16,124 +17,165 @@ export default function Context({ children }) {
   const [quickViewItem, setQuickViewItem] = useState(allProducts[0]);
   const [quickAddItem, setQuickAddItem] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
-useEffect(() => {
-  const subtotal = cartProducts.reduce((accumulator, product) => {
-    const discount = product.discount || 0; // default to 0 if no discount
-    const discountedPrice = product.price * (1 - discount / 100);
-    return accumulator + product.quantity * discountedPrice;
-  }, 0);
-  setTotalPrice(subtotal);
-}, [cartProducts]);
+  const [orderNotes, setOrderNotes] = useState(""); // Add this line for order notes
 
- const addProductToCart = (product, selectedColor, selectedSize, qty = 1) => {
-  const existingIndex = cartProducts.findIndex(
-    (p) =>
-      p.id === product.id &&
-      p.selectedColor?.name === selectedColor?.name &&
-      p.selectedSize === selectedSize
-  );
+  // Effect to calculate total price whenever cartProducts change
+  useEffect(() => {
+    const subtotal = cartProducts.reduce((accumulator, product) => {
+      const discount = product.discount || 0; // default to 0 if no discount
+      const discountedPrice = product.price * (1 - discount / 100);
+      return accumulator + product.quantity * discountedPrice;
+    }, 0);
+    setTotalPrice(subtotal);
+  }, [cartProducts]);
 
-  if (existingIndex !== -1) {
-    const updatedCart = [...cartProducts];
-    updatedCart[existingIndex].quantity += qty;
-    setCartProducts(updatedCart);
-  } else {
-    const newItem = {
-      ...product,
-      quantity: qty,
-      selectedColor,
-      selectedSize,
-    };
-    setCartProducts((prev) => [...prev, newItem]);
-  }
+  // Functions for cart management
+  const addProductToCart = (product, selectedColor, selectedSize, qty = 1) => {
+    const existingIndex = cartProducts.findIndex(
+      (p) =>
+        p.id === product.id &&
+        p.selectedColor?.name === selectedColor?.name &&
+        p.selectedSize === selectedSize
+    );
 
-  openCartModal();
-};
-const isAddedToCartProducts = (product, selectedColor, selectedSize, qty = null) => {
-  const existingItem = cartProducts.find(
-    (p) =>
-      p.id === product.id &&
-      p.selectedColor?.name === selectedColor?.name &&
-      p.selectedSize === selectedSize
-  );
+    if (existingIndex !== -1) {
+      const updatedCart = [...cartProducts];
+      updatedCart[existingIndex].quantity += qty;
+      setCartProducts(updatedCart);
+    } else {
+      const newItem = {
+        ...product,
+        quantity: qty,
+        selectedColor,
+        selectedSize,
+      };
+      setCartProducts((prev) => [...prev, newItem]);
+    }
 
-  if (!existingItem) return false;
-  if (qty !== null && existingItem.quantity === qty) return "same";
-  return "update"; // same variant but quantity differs
-};
+    openCartModal();
+  };
+
+  const isAddedToCartProducts = (product, selectedColor, selectedSize, qty = null) => {
+    const existingItem = cartProducts.find(
+      (p) =>
+        p.id === product.id &&
+        p.selectedColor?.name === selectedColor?.name &&
+        p.selectedSize === selectedSize
+    );
+
+    if (!existingItem) return false;
+    if (qty !== null && existingItem.quantity === qty) return "same";
+    return "update"; // same variant but quantity differs
+  };
 
   const updateQuantity = (product, selectedColor, selectedSize, qty) => {
-  const updatedCart = [...cartProducts];
-  const index = updatedCart.findIndex(
-    (p) =>
-      p.id === product.id &&
-      p.selectedColor?.name === selectedColor?.name &&
-      p.selectedSize === selectedSize
-  );
+    const updatedCart = [...cartProducts];
+    const index = updatedCart.findIndex(
+      (p) =>
+        p.id === product.id &&
+        p.selectedColor?.name === selectedColor?.name &&
+        p.selectedSize === selectedSize
+    );
 
-  if (index !== -1) {
-    updatedCart[index].quantity = qty;
-    setCartProducts(updatedCart);
-    openCartModal();
-  } else {
-    // Optional: auto add if not found
-    addProductToCart(product, selectedColor, selectedSize, qty);
-  }
-};
+    if (index !== -1) {
+      updatedCart[index].quantity = qty;
+      setCartProducts(updatedCart);
+      openCartModal();
+    } else {
+      // Optional: auto add if not found
+      addProductToCart(product, selectedColor, selectedSize, qty);
+    }
+  };
+
+  // Functions for wishlist management
   const addToWishlist = (id) => {
     if (!wishList.includes(id)) {
       setWishList((pre) => [...pre, id]);
     } else {
-      setWishList((pre) => [...pre].filter((elm) => elm != id));
+      setWishList((pre) => [...pre].filter((elm) => elm !== id));
     }
   };
+
   const removeFromWishlist = (id) => {
     if (wishList.includes(id)) {
-      setWishList((pre) => [...pre.filter((elm) => elm != id)]);
+      setWishList((pre) => [...pre.filter((elm) => elm !== id)]);
     }
   };
+
+  const isAddedtoWishlist = (id) => {
+    return wishList.includes(id);
+  };
+
+  // Functions for compare item management
   const addToCompareItem = (id) => {
     if (!compareItem.includes(id)) {
       setCompareItem((pre) => [...pre, id]);
     }
   };
+
   const removeFromCompareItem = (id) => {
     if (compareItem.includes(id)) {
-      setCompareItem((pre) => [...pre.filter((elm) => elm != id)]);
+      setCompareItem((pre) => [...pre.filter((elm) => elm !== id)]);
     }
   };
-  const isAddedtoWishlist = (id) => {
-    if (wishList.includes(id)) {
-      return true;
-    }
-    return false;
-  };
+
   const isAddedtoCompareItem = (id) => {
-    if (compareItem.includes(id)) {
-      return true;
-    }
-    return false;
+    return compareItem.includes(id);
   };
+
+  // --- Local Storage Effects ---
+
+  // Load cart products from local storage on component mount
   useEffect(() => {
-    const items = JSON.parse(localStorage.getItem("cartList"));
-    if (items?.length) {
-      setCartProducts(items);
+    if (typeof window !== "undefined") {
+      const items = JSON.parse(localStorage.getItem("cartList"));
+      if (items && items.length) { // Ensure items exist and are not empty
+        setCartProducts(items);
+      }
     }
   }, []);
 
+  // Save cart products to local storage whenever cartProducts change
   useEffect(() => {
-    localStorage.setItem("cartList", JSON.stringify(cartProducts));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("cartList", JSON.stringify(cartProducts));
+    }
   }, [cartProducts]);
+
+  // Load wishlist from local storage on component mount
   useEffect(() => {
-    const items = JSON.parse(localStorage.getItem("wishlist"));
-    if (items?.length) {
-      setWishList(items);
+    if (typeof window !== "undefined") {
+      const items = JSON.parse(localStorage.getItem("wishlist"));
+      if (items && items.length) { // Ensure items exist and are not empty
+        setWishList(items);
+      }
     }
   }, []);
 
+  // Save wishlist to local storage whenever wishList changes
   useEffect(() => {
-    localStorage.setItem("wishlist", JSON.stringify(wishList));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("wishlist", JSON.stringify(wishList));
+    }
   }, [wishList]);
+
+  // New: Load order notes from local storage on component mount
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const notes = localStorage.getItem("orderNotes");
+      if (notes) {
+        setOrderNotes(notes);
+      }
+    }
+  }, []);
+
+  // New: Save order notes to local storage whenever orderNotes change
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("orderNotes", orderNotes);
+    }
+  }, [orderNotes]);
+
 
   const contextElement = {
     cartProducts,
@@ -155,7 +197,10 @@ const isAddedToCartProducts = (product, selectedColor, selectedSize, qty = null)
     compareItem,
     setCompareItem,
     updateQuantity,
+    orderNotes, // Expose orderNotes
+    setOrderNotes, // Expose setOrderNotes
   };
+
   return (
     <dataContext.Provider value={contextElement}>
       {children}

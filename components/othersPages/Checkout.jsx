@@ -28,10 +28,9 @@ export default function Checkout() {
     pinCode: "",
     address: "",
     phone: "",
-    note: "",
     paymentMethod: "delivery",
   });
-  const { cartProducts, setCartProducts, totalPrice } = useContextElement();
+  const { cartProducts, setCartProducts, totalPrice, orderNotes, setOrderNotes } = useContextElement();
   const { user, loading: authLoading, isAuthenticated } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -153,7 +152,6 @@ export default function Checkout() {
           phone: "",
           state: "",
           pinCode: "",
-          note: "",
           paymentMethod: "delivery",
         });
         setUserAddresses([]);
@@ -354,7 +352,7 @@ export default function Checkout() {
         finalAmount: finalOrderAmount, // Final amount after discount
         couponCode: couponCode.trim() === "" ? null : couponCode,
         paymentMethod: formData.paymentMethod,
-        notes: formData.note,
+        notes: orderNotes,
         orderStatus: "Pending", // Initial status
         paymentStatus: formData.paymentMethod === "delivery" ? "Paid" : "Pending", // COD or Pending for bank transfer
         createdAt: serverTimestamp(),
@@ -386,13 +384,14 @@ export default function Checkout() {
       }
 
       setCartProducts([]); // Clear cart after successful order
+      setOrderNotes("");
 
       if (formData.paymentMethod === "bank") {
         setCheckoutSuccess("Order placed! Redirecting to simulated payment page.");
         router.push(`/order-processing?orderId=${orderId}`);
       } else if (formData.paymentMethod === "delivery") {
         setCheckoutSuccess("Order placed successfully! Payment on delivery.");
-        router.push(`/order-confirmation?orderId=${orderId}`);
+        router.push(`/order-confirmation/${orderId}`);
       }
     } catch (error) {
       console.error("Error placing order:", error);
@@ -537,10 +536,10 @@ export default function Checkout() {
               <fieldset className="box fieldset">
                 <label htmlFor="note">Order notes (optional)</label>
                 <textarea
+                  value={orderNotes} // Use orderNotes from context
+                  onChange={(e) => setOrderNotes(e.target.value)}
                   name="note"
                   id="note"
-                  value={formData.note}
-                  onChange={handleChange}
                 />
               </fieldset>
 

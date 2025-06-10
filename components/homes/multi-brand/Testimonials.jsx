@@ -58,29 +58,49 @@ export default function Testimonials() {
             productImgHoverSrc: product?.imgHoverSrc || '/images/placeholder-hover.jpg', // Fallback hover image
             productTitle: product?.title || 'Unknown Product',
             // Default dimensions, adjust as needed or fetch from product doc
-            imgWidth: product?.imgWidth || 450,
-            imgHeight: product?.imgHeight || 513,
+            // Assuming common dimensions for these thumbnail images
+            imgWidth: 450, // Adjust as per your thumbnail needs
+            imgHeight: 513, // Adjust as per your thumbnail needs
           };
         }).filter(t => t.productImgSrc !== '/images/placeholder.jpg'); // Filter out testimonials without a found product (if placeholder is not desired)
 
         setFeaturedTestimonials(combinedTestimonials);
 
-        // Step 4: Prepare slides for the thumbs swiper
-        // This creates arrays of 3 images for each slide in the bottom swiper
-        const imagesForSlides = combinedTestimonials.map(t => ({
-          src: t.productImgSrc,
-          alt: t.productTitle,
-          width: t.imgWidth,
-          height: t.imgHeight,
-          // You might also want imgHoverSrc here if your layout uses it directly
-        }));
-
-        const groupedSlides = [];
-        const imagesPerSlide = 3; // Or 4, based on your original `slides` structure
-        for (let i = 0; i < imagesForSlides.length; i += imagesPerSlide) {
-          groupedSlides.push({ images: imagesForSlides.slice(i, i + imagesPerSlide) });
+        // --- CORRECTED Step 4: Prepare slides for the thumbs swiper ---
+        const allProductImages = [];
+        // Iterate through unique products (from the map) to get their images
+        // This ensures each product's images appear only once in the thumb gallery
+        for (const [productId, productData] of productsDataMap.entries()) {
+          if (productData.imgSrc) {
+            allProductImages.push({
+              src: productData.imgSrc,
+              alt: productData.title || `Product ${productId}`,
+              width: 450, // You might want these to be smaller thumbnails
+              height: 513,
+            });
+          }
+          if (productData.imgHoverSrc) {
+            allProductImages.push({
+              src: productData.imgHoverSrc,
+              alt: `${productData.title || `Product ${productId}`} Hover`,
+              width: 450,
+              height: 513,
+            });
+          }
         }
-        setProductSlides(groupedSlides);
+
+        const groupedProductSlides = [];
+        // Determine how many images should appear in each slide of the thumbs Swiper.
+        // Your original HTML shows `item-1`, `item-2`, `item-3` in the grid-img-group,
+        // suggesting a layout that accommodates 3 images per visible slide.
+        // If it's a fixed grid, you might want to show N images per slide.
+        // Let's assume you want 3 images per thumbs slide, which could be 1 product's main+hover + another product's main image.
+        // Or, more likely, you want images of *different* products in one thumbs slide.
+        const imagesPerThumbsSlide = 2; // Based on item-1, item-2, item-3 in your original HTML
+        for (let i = 0; i < allProductImages.length; i += imagesPerThumbsSlide) {
+          groupedProductSlides.push({ images: allProductImages.slice(i, i + imagesPerThumbsSlide) });
+        }
+        setProductSlides(groupedProductSlides);
 
       } catch (error) {
         console.error("Error fetching testimonials or products:", error);
