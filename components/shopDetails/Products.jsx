@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"; // Import useState and useEffect
 import { db } from "@/utlis/firebaseConfig"; // Import your Firestore instance
-import { collection, getDocs, query, limit } from "firebase/firestore"; // Import Firestore functions
+import { collection, getDocs, query, limit, where } from "firebase/firestore"; // Import Firestore functions
 import { Swiper, SwiperSlide } from "swiper/react";
 import { ProductCard } from "../shopCards/ProductCard";
 import { Navigation, Pagination } from "swiper/modules";
