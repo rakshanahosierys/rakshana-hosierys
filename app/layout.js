@@ -165,7 +165,6 @@ export default function RootLayout({ children }) {
           <Compare />
           <ShopCart />
           <AskQuestion />
-          <BlogSidebar />
           <ColorCompare />
           <DeliveryReturn />
           <FindSize />

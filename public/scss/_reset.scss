@@ -790,6 +790,85 @@ video {
 .bg_f3f4f7 {
     background-color: #f3f4f7;
 }
+.bg_maroon {
+    background-color: #7F2B3B;
+}
+.bg_teal {
+    background-color: #008080;
+}
+.bg_multi {
+    background: linear-gradient(
+    90deg, /* You can adjust the angle, e.g., 90deg for horizontal */
+    rgb(148, 0, 211),   /* Violet */
+    rgb(75, 0, 130),    /* Indigo */
+    rgb(0, 0, 255),     /* Blue */
+    rgb(0, 128, 0),     /* Green */
+    rgb(255, 255, 0),   /* Yellow */
+    rgb(255, 165, 0),   /* Orange */
+    rgb(255, 0, 0)      /* Red */
+  );
+}
+// Added missing colors from PREDEFINED_COLORS in React components for consistency
+.bg_black {
+    background-color: #000000;
+}
+.bg_sandal {
+    background-color: #C2B280;
+}
+.bg_lavender {
+    background-color: #E6E6FA;
+}
+.bg_turquoise {
+    background-color: #40E0D0;
+}
+.bg_silver {
+    background-color: #C0C0C0;
+}
+.bg_olive {
+    background-color: #808000;
+}
+.bg_burgundy {
+    background-color: #800020;
+}
+.bg_emerald {
+    background-color: #50C878;
+}
+.bg_coral {
+    background-color: #FF7F50;
+}
+.bg_fuchsia {
+    background-color: #FF00FF;
+}
+.bg_sky_blue {
+    background-color: #87CEEB;
+}
+.bg_indigo {
+    background-color: #4B0082;
+}
+.bg_lime {
+    background-color: #00FF00;
+}
+.bg_magenta {
+    background-color: #FF00FF;
+}
+.bg_crimson {
+    background-color: #DC143C;
+}
+.bg_slate {
+    background-color: #708090;
+}
+.bg_charcoal {
+    background-color: #36454F;
+}
+.bg_periwinkle {
+    background-color: #CCCCFF;
+}
+.bg_mustard {
+    background-color: #FFDB58;
+}
+.bg_salmon {
+    background-color: #FA8072;
+}
 
 // color text
 .text_black {

@@ -14,6 +14,7 @@ import DetailsOuterZoom from "@/components/shopDetails/DetailsOuterZoom";
 // Import adminDb from the centralized utility file for server-side operations
 import { adminDb } from '@/utlis/firebaseAdmin';
 import ProductReviews from "@/components/shopDetails/ProductReviews"; // Import the ProductReviews component
+import ViewTracker from "@/components/shopDetails/ViewTracker"; // <--- NEW IMPORT
 
 export const metadata = {
   title: "Tinkle Classy Girls Frocks & Dresses - Classy Fox",
@@ -82,6 +83,7 @@ export default async function Page({ params }) {
   return (
     <>
       <Header7 />
+      <ViewTracker product={product} />
       <div className="tf-breadcrumb">
         <div className="container">
           <div className="tf-breadcrumb-wrap d-flex justify-content-between flex-wrap align-items-center">
