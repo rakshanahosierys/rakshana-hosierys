@@ -7,6 +7,7 @@ import Link from "next/link";
 import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 import { db } from "@/utlis/firebaseConfig"; // Ensure this path is correct for your project
 import { useRouter } from 'next/navigation'; // For Next.js App Router
+import { ProductCard } from "../../shopCards/ProductCard";
 
 export default function Products() {
   const router = useRouter();
