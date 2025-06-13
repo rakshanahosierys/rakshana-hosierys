@@ -30,7 +30,7 @@ export const faqp1 = [
   {
     title: "What payment methods do you accept?",
     content:
-      "We accept a wide range of payment options including major credit cards, debit cards, UPI, and net banking. All transactions are processed securely for your safety.",
+      "We accept a wide range of payment options including major COD, credit cards, debit cards, UPI, and net banking. All transactions are processed securely for your safety.",
   },
   {
     title: "Is it safe to use my card on your site?",

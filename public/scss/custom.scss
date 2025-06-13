@@ -412,3 +412,27 @@ font-size: 14px;
   //   color: darken(#eab308, 10%); // Darken yellow on hover
   // }
 }
+
+.flat-title .title {
+  text-align: center;
+}
+
+#header .nav-icon li {
+    display: block;
+}
+
+#header .nav-icon li:hover {
+  background-color: #f0f0f0;
+  color: #000;
+    display: block;
+}
+
+#header .nav-icon li a:hover {
+  color: #000;
+    display: block;
+}
+
+#header .nav-icon li button:hover {
+  color: #000;
+    display: block;
+}

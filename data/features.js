@@ -21,22 +21,22 @@ export const iconBoxData = [
   {
     iconClass: "icon-fast-shipping",
     title: "Free Shipping",
-    description: "Free shipping over order ₹ 120",
+    description: "Free shipping over order ₹2000",
   },
   {
     iconClass: "icon-flash",
     title: "Flexible Payment",
-    description: "Pay with Multiple Card/UPI",
+    description: "Pay with COD/Multiple Card/UPI",
   },
   {
     iconClass: "icon-return-order",
-    title: "14 Day Returns",
-    description: "Within 30 days for an exchange",
+    title: "48H Returns",
+    description: "Within 48 hour for an exchange",
   },
   {
     iconClass: "icon-suport",
-    title: "Premium Support",
-    description: "Outstanding premium support",
+    title: "Sales Support",
+    description: "Outstanding sales support",
   },
 ];
 export const iconBoxes7 = [

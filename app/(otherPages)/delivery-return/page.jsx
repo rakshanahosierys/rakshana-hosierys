@@ -27,7 +27,7 @@ export default function page() {
                 <h4>Delivery</h4>
                 <ul className="tag-list">
                   <li>All orders are shipped with trusted logistics partners and include tracking numbers for your convenience.</li>
-                  <li>Free shipping on orders above ₹999 across India.</li>
+                  <li>Free shipping on orders above ₹2000 across India.</li>
                   <li>Delivery typically takes 3–7 business days, depending on your location.</li>
                 </ul>
               </div>

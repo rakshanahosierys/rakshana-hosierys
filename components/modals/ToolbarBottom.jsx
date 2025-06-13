@@ -1,3 +1,4 @@
+// components/ToolbarBottom.jsx
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
@@ -7,9 +8,12 @@ import CartLength from "../common/CartLength";
 import WishlistLength from "../common/WishlistLength";
 import { useAuth } from "@/context/AuthContext";
 import { useModal } from "@/context/ModalContext";
-import styles from './ToolbarBottom.module.css'; // Import the CSS module
+import styles from './ToolbarBottom.module.css'; // Make sure this path is correct
+import { useRouter, usePathname } from 'next/navigation';
 
 export default function ToolbarBottom() {
+  const router = useRouter();
+  const pathname = usePathname();
   const { user, isAuthenticated, logout, loading: authLoading } = useAuth();
   const { openLoginModal } = useModal();
 
@@ -34,10 +38,18 @@ export default function ToolbarBottom() {
     try {
       await logout();
       setIsDropdownOpen(false);
+      router.push('/');
     } catch (error) {
       console.error("Error logging out:", error);
-      // Optionally show an error message
     }
+  };
+
+  const handleAccountClick = (e) => {
+    e.preventDefault();
+    const redirectPath = encodeURIComponent(pathname);
+    const targetUrl = `/login?redirect=${redirectPath}`;
+    router.push(targetUrl);
+    console.log(`Redirecting to: ${targetUrl}`);
   };
 
   return (
@@ -68,8 +80,8 @@ export default function ToolbarBottom() {
         </a>
       </div>
 
-      {/* Account/Login Section - Now with consistent root element */}
-      <div className={`${styles.accountDropdownContainer} toolbar-item`} ref={dropdownRef}>
+      {/* Account/Login Section */}
+      <div className="toolbar-item" ref={dropdownRef}>
         {authLoading ? (
           <div className={styles.spinnerWrapper}>
             <div className={styles.spinner}></div>
@@ -77,11 +89,14 @@ export default function ToolbarBottom() {
           </div>
         ) : isAuthenticated ? (
           <div
-            className={styles.userMenu} // Apply styles to make it look like a button/link
+            className={styles.userMenu}
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             aria-haspopup="true"
             aria-expanded={isDropdownOpen ? "true" : "false"}
+            role="button"
+            tabIndex="0"
           >
+            {/* MOVED THE DROPDOWN UL TO BE AFTER THE ICON AND LABEL */}
             <div className="toolbar-icon">
               {user?.photoURL ? (
                 <Image
@@ -116,20 +131,20 @@ export default function ToolbarBottom() {
                 </li>
               </ul>
             )}
+            {/* END OF MOVED DROPDOWN UL */}
           </div>
         ) : (
-          <div // Changed from <a> to <div> for consistency and controlled onClick
-            className={styles.userMenu} // Apply styles to make it look like a button/link
-            onClick={(e) => {
-              e.preventDefault(); // Prevent default anchor behavior if it were an <a>
-              openLoginModal();
-            }}
+          <a
+            onClick={handleAccountClick}
+            role="link"
+            tabIndex="0"
+            aria-label="Account Login or Dashboard"
           >
             <div className="toolbar-icon">
               <i className="icon-account" />
             </div>
-            <div className={styles.toolbarLabel}>Account</div>
-          </div>
+            <div className="toolbar-label">Account</div>
+          </a>
         )}
       </div>
 

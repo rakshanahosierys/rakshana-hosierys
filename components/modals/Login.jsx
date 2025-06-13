@@ -6,13 +6,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/utlis/firebaseConfig";
 
-/**
- * Login Modal Component
- * @param {object} props
- * @param {function} props.onClose - Function to close the modal, passed from ModalContext.
- * @param {function} props.onForgotPasswordClick - Function to open the ResetPass modal, passed from ModalContext.
- * @param {function} props.onRegisterClick - Function to open the Register modal, passed from ModalContext.
- */
 export default function Login({ onClose, onForgotPasswordClick, onRegisterClick }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -22,107 +15,120 @@ export default function Login({ onClose, onForgotPasswordClick, onRegisterClick 
   const [isLoading, setIsLoading] = useState(false);
 
   const modalRef = useRef(null);
-  const bsModalRef = useRef(null);
-  const isModalShownByBootstrap = useRef(false);
+  const bsModalRef = useRef(null); // Stores the Bootstrap Modal instance
 
-  // This ref will store the *intent* for what should happen *after* the modal hides.
-  const pendingTransition = useRef(null); // e.g., 'forgotPassword', 'register', 'loginSuccess'
+  // This ref will store the action to perform after the modal is completely hidden
+  const pendingTransition = useRef(null);
 
+  /**
+   * Callback for Bootstrap's 'hidden.bs.modal' event.
+   * This event fires AFTER the modal and its backdrop have completed their hide animations
+   * and the backdrop has been removed from the DOM.
+   */
   const handleHiddenEvent = useCallback(() => {
-    isModalShownByBootstrap.current = false;
-    console.log("Login: 'hidden.bs.modal' event fired. pendingTransition:", pendingTransition.current); // DEBUG LOG
+    console.log("Login: 'hidden.bs.modal' event fired. Initiating post-hide actions.");
 
-    // Execute the stored pending transition if any
+    // Now, execute the stored pending transition
     if (pendingTransition.current === 'forgotPassword') {
-      console.log("Login: Executing forgotPassword transition (calling onForgotPasswordClick)."); // DEBUG LOG
       if (onForgotPasswordClick) onForgotPasswordClick(email);
     } else if (pendingTransition.current === 'register') {
-      console.log("Login: Executing register transition (calling onRegisterClick)."); // DEBUG LOG
       if (onRegisterClick) onRegisterClick();
     } else if (pendingTransition.current === 'loginSuccess') {
-      console.log("Login: Executing loginSuccess transition (redirecting)."); // DEBUG LOG
       const redirectUrl = searchParams.get("redirect");
       router.push(redirectUrl || "/my-account");
     } else {
-        console.log("Login: No specific pending transition, defaulting to onClose()."); // DEBUG LOG
+      console.log("Login: No specific pending transition, simply closing.");
     }
 
-    // Always call onClose. This signals ModalContext to potentially reset showLoginModal to false.
+    pendingTransition.current = null; // Reset for next time
+
+    // CRITICAL: Call onClose() here. At this point, Bootstrap has fully
+    // cleaned up the modal and its backdrop from the DOM. React can now
+    // safely unmount the Login component.
     if (onClose) {
+      console.log("Login: Calling onClose() from handleHiddenEvent to trigger React unmount.");
       onClose();
     }
 
-    // Reset the pending transition
-    pendingTransition.current = null;
   }, [onClose, onForgotPasswordClick, onRegisterClick, email, router, searchParams]);
 
-
+  /**
+   * Callback for Bootstrap's 'shown.bs.modal' event.
+   * Useful for knowing when the modal is fully visible.
+   */
   const handleShownEvent = useCallback(() => {
-    console.log("Login: 'shown.bs.modal' event fired."); // DEBUG LOG
-    isModalShownByBootstrap.current = true;
+    console.log("Login: 'shown.bs.modal' event fired.");
   }, []);
 
+  // --- useEffect for Bootstrap Modal Lifecycle Management ---
   useEffect(() => {
-    console.log("Login component mounted. Initializing Bootstrap modal."); // DEBUG LOG
+    // Ensure modalRef.current is available and hasn't been unmounted prematurely
     if (!modalRef.current) {
-      console.warn("Login: modalRef.current is null on mount."); // DEBUG WARNING
+      console.log("Login: modalRef.current is null on useEffect mount, returning.");
       return;
     }
 
+    console.log("Login: Initializing Bootstrap Modal instance on mount.");
+
     let bootstrapModalInstance;
 
+    // Dynamically import Bootstrap JS to ensure it runs client-side
     import("bootstrap/dist/js/bootstrap.esm").then((bootstrap) => {
-      if (!bsModalRef.current) {
-        bootstrapModalInstance = new bootstrap.Modal(modalRef.current, {
-          backdrop: 'static',
-          keyboard: false
-        });
-        bsModalRef.current = bootstrapModalInstance;
-        console.log("Login: Bootstrap Modal instance created."); // DEBUG LOG
+        // Double-check if the ref is still valid after the async import
+        // (important for strict mode/fast unmounts in dev)
+        if (!modalRef.current) {
+            console.warn("Login: modalRef.current became null during Bootstrap import. Skipping initialization.");
+            return;
+        }
 
-        // Add event listeners
+        // Create a new Bootstrap Modal instance
+        bootstrapModalInstance = new bootstrap.Modal(modalRef.current, {
+            backdrop: 'static', // Prevents clicking outside from closing the modal directly
+            keyboard: false // Prevents ESC key from closing the modal directly
+        });
+        bsModalRef.current = bootstrapModalInstance; // Store the instance in ref
+
+        // Attach event listeners to the DOM element
         modalRef.current.addEventListener('hidden.bs.modal', handleHiddenEvent);
         modalRef.current.addEventListener('shown.bs.modal', handleShownEvent);
-        console.log("Login: Event listeners added."); // DEBUG LOG
-      } else {
-        bootstrapModalInstance = bsModalRef.current;
-        console.log("Login: Bootstrap Modal instance already exists."); // DEBUG LOG
-      }
 
-      // Show the modal if it's not already visible
-      if (modalRef.current && !isModalShownByBootstrap.current && !modalRef.current.classList.contains('show')) {
-        bootstrapModalInstance.show();
-        console.log("Login: bsModalRef.current.show() called on mount."); // DEBUG LOG
-      } else {
-        console.log("Login: Modal is already shown or in process of showing, skipping bsModalRef.current.show() on mount."); // DEBUG LOG
-      }
+        // Show the modal after initialization and listeners are attached
+        bsModalRef.current.show();
+        console.log("Login: Bootstrap Modal instance created and shown on mount.");
+
     }).catch(err => console.error("Failed to load Bootstrap in Login modal:", err));
 
+    // --- Cleanup function for when the component unmounts ---
     return () => {
-      console.log("Login: Component unmounting cleanup."); // DEBUG LOG
-      // Remove event listeners before disposing
-      if (modalRef.current && bsModalRef.current) {
-          modalRef.current.removeEventListener('hidden.bs.modal', handleHiddenEvent);
-          modalRef.current.removeEventListener('shown.bs.modal', handleShownEvent);
-          console.log("Login: Event listeners removed during cleanup."); // DEBUG LOG
+      console.log("Login: Component unmounting cleanup.");
+
+      // Remove event listeners from the DOM element
+      if (modalRef.current) {
+        modalRef.current.removeEventListener('hidden.bs.modal', handleHiddenEvent);
+        modalRef.current.removeEventListener('shown.bs.modal', handleShownEvent);
+        console.log("Login: Event listeners removed during cleanup.");
       }
 
-      // Dispose the Bootstrap instance only when the component unmounts
+      // Dispose the Bootstrap instance if it exists.
+      // We don't call .hide() here because the component unmounts *after*
+      // Bootstrap's `hide()` (and `handleHiddenEvent`) has already run.
       if (bsModalRef.current) {
-        bsModalRef.current.dispose();
-        bsModalRef.current = null;
-        isModalShownByBootstrap.current = false;
-        console.log("Login: Bootstrap Modal instance disposed during cleanup."); // DEBUG LOG
+        bsModalRef.current.dispose(); // Dispose to prevent memory leaks
+        bsModalRef.current = null; // Clear the ref
+        console.log("Login: Bootstrap Modal instance disposed during cleanup.");
       }
     };
-  }, [handleHiddenEvent, handleShownEvent]);
+  }, [handleHiddenEvent, handleShownEvent]); // Dependencies for useCallback functions
 
+  // Effect to pre-fill email if provided via URL search params
   useEffect(() => {
     const defaultEmail = searchParams.get('email');
     if (defaultEmail) {
       setEmail(defaultEmail);
     }
   }, [searchParams]);
+
+  // --- Event Handlers (Triggering Bootstrap's hide method) ---
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -137,20 +143,23 @@ export default function Login({ onClose, onForgotPasswordClick, onRegisterClick 
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      console.log("Login successful!"); // DEBUG LOG
+      console.log("Login successful!");
 
-      // Set the pending transition for login success
+      // Set the pending transition for post-hide actions
       pendingTransition.current = 'loginSuccess';
-      // --- ADD THIS SMALL DELAY ---
-      // This is a diagnostic step. If the event doesn't fire, it might be a race condition.
-      setTimeout(() => {
-        if (bsModalRef.current) {
-          console.log("Login: Calling bsModalRef.current.hide() for login success (after timeout)."); // DEBUG LOG
-          bsModalRef.current.hide(); // This will trigger handleHiddenEvent
-        }
-      }, 50); // A small delay, e.g., 50ms, might help ensure event listener is ready.
-      // --- END ADDITION ---
-      // router.push is now handled in handleHiddenEvent
+
+      // CRITICAL: Initiate Bootstrap's hide.
+      // onClose() will be called by handleHiddenEvent *after* hide completes.
+      if (bsModalRef.current) {
+        console.log("Login: Calling bsModalRef.current.hide() for login success.");
+        bsModalRef.current.hide();
+      } else {
+        // Fallback: If Bootstrap instance isn't available for some reason (rare)
+        console.error("Login: bsModalRef.current is null on login success. Forcing React close.");
+        if (onClose) onClose(); // Force React to unmount
+        const redirectUrl = searchParams.get("redirect");
+        router.push(redirectUrl || "/my-account");
+      }
     } catch (err) {
       console.error("Login error:", err);
       if (err.code === "auth/invalid-email" || err.code === "auth/user-not-found" || err.code === "auth/wrong-password") {
@@ -167,23 +176,29 @@ export default function Login({ onClose, onForgotPasswordClick, onRegisterClick 
 
   const handleForgotPassword = (e) => {
     e.preventDefault();
-    console.log("Login: Forgot Password clicked. Setting pendingTransition to 'forgotPassword'."); // DEBUG LOG
-    // Set the pending transition to 'forgotPassword'
+    console.log("Login: Forgot Password clicked. Setting pendingTransition to 'forgotPassword'.");
     pendingTransition.current = 'forgotPassword';
     if (bsModalRef.current) {
-      console.log("Login: Calling bsModalRef.current.hide() for forgot password."); // DEBUG LOG
-      bsModalRef.current.hide(); // This will trigger handleHiddenEvent
+      console.log("Login: Calling bsModalRef.current.hide() for forgot password.");
+      bsModalRef.current.hide();
+    } else {
+      console.warn("Login: bsModalRef.current is null for forgot password. Forcing React close.");
+      if (onClose) onClose();
+      if (onForgotPasswordClick) onForgotPasswordClick(email);
     }
   };
 
   const handleRegister = (e) => {
     e.preventDefault();
-    console.log("Login: Register clicked. Setting pendingTransition to 'register'."); // DEBUG LOG
-    // Set the pending transition to 'register'
+    console.log("Login: Register clicked. Setting pendingTransition to 'register'.");
     pendingTransition.current = 'register';
     if (bsModalRef.current) {
-      console.log("Login: Calling bsModalRef.current.hide() for register."); // DEBUG LOG
-      bsModalRef.current.hide(); // This will trigger handleHiddenEvent
+      console.log("Login: Calling bsModalRef.current.hide() for register.");
+      bsModalRef.current.hide();
+    } else {
+      console.warn("Login: bsModalRef.current is null for register. Forcing React close.");
+      if (onClose) onClose();
+      if (onRegisterClick) onRegisterClick();
     }
   };
 
@@ -194,7 +209,7 @@ export default function Login({ onClose, onForgotPasswordClick, onRegisterClick 
       tabIndex="-1"
       role="dialog"
       aria-labelledby="loginModalLabel"
-      ref={modalRef}
+      ref={modalRef} // Attach the ref to the modal DOM element
     >
       <div className="modal-dialog modal-dialog-centered" role="document">
         <div className="modal-content">
@@ -203,11 +218,13 @@ export default function Login({ onClose, onForgotPasswordClick, onRegisterClick 
             <span
               className="icon-close icon-close-popup"
               onClick={() => {
-                console.log("Login: Close icon clicked. Calling bsModalRef.current.hide()."); // DEBUG LOG
-                // For a simple close, we don't set a specific pendingTransition.
-                // handleHiddenEvent will then default to just calling onClose().
+                console.log("Login: Close icon clicked. Setting pendingTransition to null and calling hide.");
+                pendingTransition.current = null; // No specific follow-up action
                 if (bsModalRef.current) {
                   bsModalRef.current.hide();
+                } else {
+                  console.warn("Login: bsModalRef.current is null for close icon. Calling onClose directly.");
+                  if (onClose) onClose(); // Fallback for direct close
                 }
               }}
               style={{ cursor: 'pointer' }}

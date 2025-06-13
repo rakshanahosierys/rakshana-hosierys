@@ -32,28 +32,31 @@
 
 /* Container for the dropdown to manage positioning */
 .accountDropdownContainer {
-  position: relative; /* Crucial for positioning the dropdown menu */
-  /* Ensure no conflicting z-index, transform, opacity, filter here */
+  position: relative; /* <<< CRUCIAL: Establishes positioning context for absolute children */
+  z-index: 1000; /* Ensure it's above other elements if it overlaps */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Styles for the clickable user menu (avatar + name) for both logged-in and logged-out states */
 .userMenu {
   display: flex;
-  flex-direction: column; /* Stack icon/avatar and label vertically */
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
   cursor: pointer;
-  height: 100%; /* Take full height of toolbar-item */
-  width: 100%; /* Take full width of toolbar-item */
-  padding: 5px; /* Adjust padding as needed */
-  text-decoration: none; /* Ensure no underline if it's a div acting as a link */
-  color: inherit; /* Inherit text color */
-  transition: background-color 0.2s ease, color 0.2s ease; /* Smooth hover effects */
+  padding: 5px 8px;
+  border-radius: 5px;
+  transition: background-color 0.2s ease;
+  color: #333;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
 }
 
 .userMenu:hover {
-  background-color: #f0f0f0; /* Example hover background */
-  color: #007bff; /* Example hover text color */
+  background-color: #f5f5f5;
 }
 
 /* Avatar styling */
@@ -71,34 +74,30 @@
   white-space: nowrap; /* Prevent name from wrapping */
   overflow: hidden;
   text-overflow: ellipsis; /* Add ellipsis for long names */
-  max-width: 100%; /* Ensure it respects parent width */
+  max-width: 100px; /* Ensure it respects parent width */
 }
-
-/* Ensure the entire toolbar is above other content */
-.tf-toolbar-bottom { /* This class is defined in your main component div */
-  position: relative; /* It usually already has this, but explicitly ensure it */
-  z-index: 99999; /* Make this extremely high, higher than the dropdown itself */
-}
-
 /* Dropdown menu styling */
+/* Dropdown menu styling */
+/* Styles for the dropdown menu itself */
 .dropdownMenu {
   position: absolute;
-  top: calc(100% + 10px); /* Position 10px BELOW the toolbar-item */
-  left: 50%; /* Center horizontally */
-  transform: translateX(-50%); /* Adjust for centering */
+  top: auto; /* <-- CRUCIAL: Makes sure 'bottom' takes full control, overriding any conflicting 'top' */
+  bottom: calc(100% + 10px); /* <-- THIS IS THE KEY TO POSITIONING IT ABOVE */
+  left: 50%;
+  transform: translateX(-50%); /* Adjusts for true horizontal centering */
+  z-index: 1001; /* <-- CRUCIAL: Ensures it's always on top of other content */
+
+  /* Standard visual styling */
+  min-width: 180px;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  min-width: 150px;
   list-style: none;
   padding: 10px 0;
   margin: 0;
-  z-index: 100; /* This can be 100, 1000, or 9999. It just needs to be higher than other siblings within .accountDropdownContainer */
-  animation: fadeInDown 0.2s ease-out;
+  animation: fadeInDown 0.2s ease-out; /* Your animation */
 }
-
-
 .dropdownMenu li {
   padding: 0;
 }
@@ -128,7 +127,7 @@
 @keyframes fadeInDown {
   from {
     opacity: 0;
-    transform: translate(-50%, -10px); /* Starts slightly above and moves down */
+    transform: translate(-50%, 10px); /* Adjust for upward animation */
   }
   to {
     opacity: 1;

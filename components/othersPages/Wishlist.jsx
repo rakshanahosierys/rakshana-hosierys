@@ -38,7 +38,6 @@ export default function Wishlist() {
   // 2. Effect to filter wishlist items whenever wishList or allFirestoreProducts changes
   useEffect(() => {
     if (wishList && allFirestoreProducts.length > 0) {
-      console.log("Wishlist IDs:", wishList);
       const filtered = allFirestoreProducts.filter((product) =>
         wishList.includes(product.id)
       );
@@ -55,7 +54,7 @@ export default function Wishlist() {
   }, [wishList, allFirestoreProducts, isLoadingProducts]); // Depend on wishList and allFirestoreProducts
 
   return (
-    <section className="flat-spacing-2">
+    <section className="flat-spacing-12">
       <div className="container">
         {isLoadingProducts ? (
           <div className="text-center py-5">Loading wishlist products...</div>
@@ -69,18 +68,17 @@ export default function Wishlist() {
             {!wishListItems.length && (
               <>
                 <div
-                  className="row align-items-center w-100"
-                  style={{ rowGap: "20px" }}
+                  className="flat-title my-0"
                 >
-                  <div className="col-lg-3 col-md-6 fs-18">
+                  <span className="title">
                     Your wishlist is empty
-                  </div>
+                  </span>
                   <div className="col-lg-3 col-md-6">
                     <Link
                       href={`/shop-default`}
                       className="tf-btn btn-fill animate-hover-btn radius-3 w-100 justify-content-center"
                     >
-                      Explore Products!
+                      Explore Products
                     </Link>
                   </div>
                 </div>

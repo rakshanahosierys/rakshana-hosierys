@@ -13,7 +13,7 @@ export const useContextElement = () => {
 export default function Context({ children }) {
   const [cartProducts, setCartProducts] = useState([]);
   const [wishList, setWishList] = useState([]);
-  const [compareItem, setCompareItem] = useState([1, 2, 3]);
+  const [compareItem, setCompareItem] = useState([]);
   const [quickViewItem, setQuickViewItem] = useState(allProducts[0]);
   const [quickAddItem, setQuickAddItem] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -158,6 +158,23 @@ export default function Context({ children }) {
       localStorage.setItem("wishlist", JSON.stringify(wishList));
     }
   }, [wishList]);
+
+    // Load compareItem from local storage on component mount
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const items = JSON.parse(localStorage.getItem("compareItem"));
+      if (items && items.length) { // Ensure items exist and are not empty
+        setCompareItem(items);
+      }
+    }
+  }, []);
+
+    // Save compareItem to local storage whenever compareItem changes
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("compareItem", JSON.stringify(compareItem));
+    }
+  }, [compareItem]);
 
   // New: Load order notes from local storage on component mount
   useEffect(() => {

@@ -5,10 +5,8 @@ import { useEffect, useState } from "react";
 import "../public/scss/main.scss";
 import "photoswipe/dist/photoswipe.css";
 import "rc-slider/assets/index.css";
-import HomesModal from "@/components/modals/HomesModal";
 import Context from "@/context/Context";
 import QuickView from "@/components/modals/QuickView";
-import ProductSidebar from "@/components/modals/ProductSidebar";
 import QuickAdd from "@/components/modals/QuickAdd";
 import Compare from "@/components/modals/Compare";
 import ShopCart from "@/components/modals/ShopCart";
@@ -159,9 +157,8 @@ export default function RootLayout({ children }) {
           <div id="wrapper">{children}</div>
           {/* Render the new GlobalModals component here */}
           <GlobalModals />
-          <HomesModal /> <QuickView />
+          <QuickView />
           <QuickAdd />
-          <ProductSidebar />
           <Compare />
           <ShopCart />
           <AskQuestion />

@@ -50,7 +50,7 @@ export default function Categories2() {
         // Add "New Arrival" as the last category
         const newArrivalCategory = {
           id: "new-arrival", // Unique ID for New Arrival
-          imgSrc: "https://placehold.co/360x432/eeecdf/eeecdf", // Placeholder image for New Arrival
+          imgSrc: "/images/shop/cate/new-arrivals.jpg", // Placeholder image for New Arrival
           link: `/shop-default?filter=${encodeURIComponent("New Arrivals")}`, // Link to a New Arrival page/filter
           title: "New Arrival",
           alt: "Discover the latest fashion and newest arrivals"

@@ -298,19 +298,19 @@ export default function MobileMenu() {
               </a>
 
               {isUserDropdownOpen && (
-                <ul className="mobile-user-dropdown-menu">
-                  <li>
+                <ul className="nav-ul-mb">
+                  <li className="nav-mb-item">
                     <Link href="/my-account" onClick={() => setIsUserDropdownOpen(false)}>
                       My Profile
                     </Link>
                   </li>
-                  <li>
+                  <li className="nav-mb-item">
                     <Link href="/my-orders" onClick={() => setIsUserDropdownOpen(false)}>
                       My Orders
                     </Link>
                   </li>
-                  <li>
-                    <button onClick={handleLogout}>Logout</button>
+                  <li className="nav-mb-item">
+                    <Link href="" onClick={handleLogout}>Logout </Link>
                   </li>
                 </ul>
               )}

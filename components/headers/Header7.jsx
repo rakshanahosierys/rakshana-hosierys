@@ -17,11 +17,11 @@ export default function Header7() {
   const { wishList, cartProducts } = useContextElement(); // Get the raw lists from context
 
   const wishlistCount = wishList ? wishList.length : 0;
- const cartTotalQuantity = cartProducts ? cartProducts.length : 0;
+  const cartTotalQuantity = cartProducts ? cartProducts.length : 0;
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const { openLoginModal } = useModal();
+  const { openLoginModal, closeLoginModal } = useModal();
   const { user, isAuthenticated, logout, loading: authLoading } = useAuth(); // Get user, isAuthenticated, logout, loading from AuthContext
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -64,8 +64,8 @@ export default function Header7() {
                   </Link>
                 </li>
                 <li className={`categories-item ${pathname === '/shop-default' && searchParams.toString() === ''
-                    ? 'active'
-                    : ''
+                  ? 'active'
+                  : ''
                   }`}>
                   <Link href={`/shop-default`} className="text-uppercase">
                     Shop
@@ -173,13 +173,14 @@ export default function Header7() {
                           <i className="icon icon-account" />
                         )}
                       </div>
-                      <span className={styles.userName}>
-                        {user?.displayName || user?.email?.split('@')[0] || 'Account'}
-                      </span>
-                      <i className={`${styles.dropdownArrow} ${isDropdownOpen ? styles.arrowUp : styles.arrowDown}`} />
-
+                      
                       {isDropdownOpen && (
                         <ul className={styles.dropdownMenu}>
+                          <li>
+                            <span className={styles.userName}>
+                              {user?.displayName || user?.email?.split('@')[0] || 'Account'}
+                            </span>
+                          </li>
                           <li>
                             <Link href="/my-account" onClick={() => setIsDropdownOpen(false)}>
                               My Profile
@@ -200,41 +201,37 @@ export default function Header7() {
                   ) : (
                     // User is not logged in, show login/register link or icon
                     <a
-                      href="#"
+                      href= {`/login?redirect=${encodeURIComponent(pathname)}`}
                       className="nav-icon-item"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        openLoginModal(); // Open the login modal
-                      }}
                     >
                       <i className="icon icon-account" />
                     </a>
                   )}
                 </li>
                 <li className={`nav-wishlist ${wishlistCount === 0 ? 'no-items' : ''}`}> {/* Add 'no-items' class */}
-        <Link href={`/wishlist`} className="nav-icon-item">
-          <i className="icon icon-heart" />
-          {wishlistCount > 0 && ( // Only render span if count > 0
-            <span className="count-box">
-              {wishlistCount}
-            </span>
-          )}
-        </Link>
-      </li>
-      <li className={`nav-cart ${cartTotalQuantity === 0 ? 'no-items' : ''}`}> {/* Add 'no-items' class */}
-        <a
-          href="#shoppingCart"
-          data-bs-toggle="modal"
-          className="nav-icon-item"
-        >
-          <i className="icon icon-bag" />
-          {cartTotalQuantity > 0 && ( // Only render span if count > 0
-            <span className="count-box">
-              {cartTotalQuantity}
-            </span>
-          )}
-        </a>
-      </li>
+                  <Link href={`/wishlist`} className="nav-icon-item">
+                    <i className="icon icon-heart" />
+                    {wishlistCount > 0 && ( // Only render span if count > 0
+                      <span className="count-box">
+                        {wishlistCount}
+                      </span>
+                    )}
+                  </Link>
+                </li>
+                <li className={`nav-cart ${cartTotalQuantity === 0 ? 'no-items' : ''}`}> {/* Add 'no-items' class */}
+                  <a
+                    href="#shoppingCart"
+                    data-bs-toggle="modal"
+                    className="nav-icon-item"
+                  >
+                    <i className="icon icon-bag" />
+                    {cartTotalQuantity > 0 && ( // Only render span if count > 0
+                      <span className="count-box">
+                        {cartTotalQuantity}
+                      </span>
+                    )}
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
@@ -255,37 +252,37 @@ export default function Header7() {
                 </Link>
               </li>
               <li className={`categories-item ${pathname === '/shop-default' && searchParams.toString() === ''
-                    ? 'active'
-                    : ''
-                  }`}>
+                ? 'active'
+                : ''
+                }`}>
                 <Link href={`/shop-default`} className="text-uppercase">
                   Shop
                 </Link>
               </li>
               <li className={`categories-item ${pathname === '/shop-default' && searchParams.get('filter') === 'Men'
-                  ? 'active'
-                  : ''
-                  }`}>
-                  <Link href={`/shop-default?filter=Men`} className="text-uppercase">
-                    Men
-                  </Link>
-                </li>
-                <li className={`categories-item ${pathname === '/shop-default' && searchParams.get('filter') === 'Women'
-                  ? 'active'
-                  : ''
-                  }`}>
-                  <Link href={`/shop-default?filter=Women`} className="text-uppercase">
-                    Women
-                  </Link>
-                </li>
-                <li className={`categories-item ${pathname === '/shop-default' && searchParams.get('filter') === 'Kids'
-                  ? 'active'
-                  : ''
-                  }`}>
-                  <Link href={`/shop-default?filter=Kids`} className="text-uppercase">
-                    Kids
-                  </Link>
-                </li>
+                ? 'active'
+                : ''
+                }`}>
+                <Link href={`/shop-default?filter=Men`} className="text-uppercase">
+                  Men
+                </Link>
+              </li>
+              <li className={`categories-item ${pathname === '/shop-default' && searchParams.get('filter') === 'Women'
+                ? 'active'
+                : ''
+                }`}>
+                <Link href={`/shop-default?filter=Women`} className="text-uppercase">
+                  Women
+                </Link>
+              </li>
+              <li className={`categories-item ${pathname === '/shop-default' && searchParams.get('filter') === 'Kids'
+                ? 'active'
+                : ''
+                }`}>
+                <Link href={`/shop-default?filter=Kids`} className="text-uppercase">
+                  Kids
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

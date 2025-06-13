@@ -31,7 +31,7 @@ export default function ToolbarShop() {
           transformedLinks.push({
             name: "New Arrivals",
             href: `/shop-default?filter=${encodeURIComponent("New Arrivals")}`,
-            image: "/images/shop/cate/new-arrivals.jpg",
+            image: "/images/shop/cate/new-arrivals-sq.jpg",
           });
 
           setDynamicCategories(transformedLinks);

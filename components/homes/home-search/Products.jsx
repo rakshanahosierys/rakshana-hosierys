@@ -167,7 +167,8 @@ export default function Products() {
                 >
                   {linkItem.name}
                 </Link>
-                {index < dynamicQuickLinks.length - 1 && ",&nbsp;"}
+                {index < dynamicQuickLinks.length - 1 && ","}
+                &nbsp;
               </React.Fragment>
             ))
           )}
