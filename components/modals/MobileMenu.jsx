@@ -305,7 +305,7 @@ export default function MobileMenu() {
                     </Link>
                   </li>
                   <li className="nav-mb-item">
-                    <Link href="/my-orders" onClick={() => setIsUserDropdownOpen(false)}>
+                    <Link href="/my-account-orders" onClick={() => setIsUserDropdownOpen(false)}>
                       My Orders
                     </Link>
                   </li>
