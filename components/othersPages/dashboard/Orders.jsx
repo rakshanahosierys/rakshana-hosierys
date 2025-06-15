@@ -98,21 +98,31 @@ export default function Orders() {
                 <td>{order.orderStatus}</td>
                 <td>₹{order.totalAmount?.toFixed(2) || '0.00'} for {order.products?.length || 0} items</td>
                 <td>
-                  {order.paymentStatus === 'Pending' ? (
+                  {order.paymentStatus === 'Pending' && (
                     <Link
                       href={`/order-processing?orderId=${order.id}`}
-                      className="tf-btn btn-fill animate-hover-btn rounded-0 justify-content-center"
+                      className="tf-btn btn-fill animate-hover-btn rounded-0 justify-content-center me-2 mb-2"
                     >
                       <span>Pay Now</span>
                     </Link>
-                  ) : (
+                  )}
+
+                  {order.orderStatus === 'Delivered' && (
                     <Link
-                      href={`/my-account-orders-details/${order.id}`}
-                      className="tf-btn btn-fill animate-hover-btn rounded-0 justify-content-center"
+                      href={`/invoice/${order.id}`}
+                      className="tf-btn btn-fill animate-hover-btn rounded-0 justify-content-center me-2 mb-2"
                     >
-                      <span>View</span>
+                      <span>Invoice</span>
                     </Link>
                   )}
+
+                  {/* Always show View, or conditionally if you want to exclude it when Pay Now/Invoice are shown */}
+                  <Link
+                    href={`/my-account-orders-details/${order.id}`}
+                    className="tf-btn btn-fill animate-hover-btn rounded-0 justify-content-center mb-2"
+                  >
+                    <span>View</span>
+                  </Link>
                 </td>
               </tr>
             ))}
