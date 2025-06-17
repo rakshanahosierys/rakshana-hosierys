@@ -31,13 +31,6 @@ export default function ProductReviews({ productId }) {
       }
       const reviewsRef = collection(db, "reviews");
 
-      const subscribersRef = collection(db, "orders");
-    const subscribersSnap = await getDocs(subscribersRef);
-
-    subscribersSnap.forEach((doc) => {
-      console.log(`ID: ${doc.id}`, doc.data());
-    });
-
       // Query reviews for the specific productId, ordered by creation time
       const q = query(reviewsRef, where("productId", "==", productId), orderBy("createdAt", "desc"));
       const querySnapshot = await getDocs(q);

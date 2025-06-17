@@ -1,103 +1,100 @@
-[debug] [2025-06-15T08:52:30.977Z] ----------------------------------------------------------------------
-[debug] [2025-06-15T08:52:30.979Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\SAC\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js emulators:start --import=./seed --export-on-exit=./seed
-[debug] [2025-06-15T08:52:30.980Z] CLI Version:   14.6.0
-[debug] [2025-06-15T08:52:30.980Z] Platform:      win32
-[debug] [2025-06-15T08:52:30.980Z] Node Version:  v20.17.0
-[debug] [2025-06-15T08:52:30.980Z] Time:          Sun Jun 15 2025 14:22:30 GMT+0530 (India Standard Time)
-[debug] [2025-06-15T08:52:30.980Z] ----------------------------------------------------------------------
+[debug] [2025-06-17T11:11:11.690Z] ----------------------------------------------------------------------
+[debug] [2025-06-17T11:11:11.694Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\SAC\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js emulators:start --import=./seed --export-on-exit=./seed
+[debug] [2025-06-17T11:11:11.694Z] CLI Version:   14.7.0
+[debug] [2025-06-17T11:11:11.694Z] Platform:      win32
+[debug] [2025-06-17T11:11:11.695Z] Node Version:  v20.17.0
+[debug] [2025-06-17T11:11:11.695Z] Time:          Tue Jun 17 2025 16:41:11 GMT+0530 (India Standard Time)
+[debug] [2025-06-17T11:11:11.695Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2025-06-15T08:52:30.982Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
-[debug] [2025-06-15T08:52:31.204Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2025-06-15T08:52:31.204Z] > authorizing via signed-in user (rakshanahosierys@gmail.com)
-[debug] [2025-06-15T08:52:31.318Z] java version "22.0.2" 2024-07-16
+[debug] [2025-06-17T11:11:11.922Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-17T11:11:11.923Z] > authorizing via signed-in user (rakshanahosierys@gmail.com)
+[debug] [2025-06-17T11:11:12.018Z] java version "22.0.2" 2024-07-16
 
-[debug] [2025-06-15T08:52:31.319Z] Java(TM) SE Runtime Environment (build 22.0.2+9-70)
+[debug] [2025-06-17T11:11:12.018Z] Java(TM) SE Runtime Environment (build 22.0.2+9-70)
 Java HotSpot(TM) 64-Bit Server VM (build 22.0.2+9-70, mixed mode, sharing)
 
-[debug] [2025-06-15T08:52:31.341Z] Parsed Java major version: 22
+[debug] [2025-06-17T11:11:12.055Z] Parsed Java major version: 22
 [info] i  emulators: Starting emulators: apphosting, auth, functions, firestore, hosting, storage, extensions {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: apphosting, auth, functions, firestore, hosting, storage, extensions"}}
-[debug] [2025-06-15T08:52:31.343Z] Checked if tokens are valid: false, expires at: 1749830693570
-[debug] [2025-06-15T08:52:31.343Z] Checked if tokens are valid: false, expires at: 1749830693570
-[debug] [2025-06-15T08:52:31.343Z] > refreshing access token with scopes: []
-[debug] [2025-06-15T08:52:31.344Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
-[debug] [2025-06-15T08:52:31.344Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
-[debug] [2025-06-15T08:52:31.490Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
-[debug] [2025-06-15T08:52:31.491Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
-[debug] [2025-06-15T08:52:31.854Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rakshana-hosierys/services/cloudresourcemanager.googleapis.com [none]
-[debug] [2025-06-15T08:52:31.854Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rakshana-hosierys/services/cloudresourcemanager.googleapis.com x-goog-quota-user=projects/rakshana-hosierys
-[debug] [2025-06-15T08:52:32.123Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
-[debug] [2025-06-15T08:52:32.123Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
-[debug] [2025-06-15T08:52:33.583Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rakshana-hosierys/services/cloudresourcemanager.googleapis.com 200
-[debug] [2025-06-15T08:52:33.583Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rakshana-hosierys/services/cloudresourcemanager.googleapis.com [omitted]
-[debug] [2025-06-15T08:52:33.583Z] Checked if tokens are valid: true, expires at: 1749981150491
-[debug] [2025-06-15T08:52:33.583Z] Checked if tokens are valid: true, expires at: 1749981150491
-[debug] [2025-06-15T08:52:33.583Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/rakshana-hosierys [none]
-[debug] [2025-06-15T08:52:34.938Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/rakshana-hosierys 200
-[debug] [2025-06-15T08:52:34.938Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/rakshana-hosierys {"projectNumber":"352024844900","projectId":"rakshana-hosierys","lifecycleState":"ACTIVE","name":"Rakshana Hosierys","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2025-05-08T14:54:41.143361Z"}
-[debug] [2025-06-15T08:52:34.951Z] [logging] Logging Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
-[debug] [2025-06-15T08:52:34.951Z] [apphosting] App Hosting Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
-[debug] [2025-06-15T08:52:34.951Z] assigned listening specs for emulators {"user":{"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000}],"auth":[{"address":"127.0.0.1","family":"IPv4","port":9099}],"firestore":[{"address":"127.0.0.1","family":"IPv4","port":8080}],"firestore.websocket":[{"address":"127.0.0.1","family":"IPv4","port":9150}],"hosting":[{"address":"127.0.0.1","family":"IPv4","port":5000}],"storage":[{"address":"127.0.0.1","family":"IPv4","port":9199}],"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"apphosting":[{"address":"127.0.0.1","family":"IPv4","port":5002}]},"metadata":{"message":"assigned listening specs for emulators"}}
-[debug] [2025-06-15T08:52:34.955Z] [hub] writing locator at C:\Users\SAC\AppData\Local\Temp\hub-rakshana-hosierys.json
-[debug] [2025-06-15T08:52:34.963Z] [Extensions] Started Extensions emulator, this is a noop.
-[debug] [2025-06-15T08:52:34.967Z] [eventarc] Eventarc Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
-[debug] [2025-06-15T08:52:34.967Z] [tasks] Cloud Tasks Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
-[debug] [2025-06-15T08:52:34.967Z] late-assigned ports for functions and eventarc emulators {"user":{"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000}],"auth":[{"address":"127.0.0.1","family":"IPv4","port":9099}],"firestore":[{"address":"127.0.0.1","family":"IPv4","port":8080}],"firestore.websocket":[{"address":"127.0.0.1","family":"IPv4","port":9150}],"hosting":[{"address":"127.0.0.1","family":"IPv4","port":5000}],"storage":[{"address":"127.0.0.1","family":"IPv4","port":9199}],"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"apphosting":[{"address":"127.0.0.1","family":"IPv4","port":5002}],"functions":[{"address":"127.0.0.1","family":"IPv4","port":5001}],"eventarc":[{"address":"127.0.0.1","family":"IPv4","port":9299}],"tasks":[{"address":"127.0.0.1","family":"IPv4","port":9499}]},"metadata":{"message":"late-assigned ports for functions and eventarc emulators"}}
+[debug] [2025-06-17T11:11:12.057Z] Checked if tokens are valid: false, expires at: 1750157805019
+[debug] [2025-06-17T11:11:12.057Z] Checked if tokens are valid: false, expires at: 1750157805019
+[debug] [2025-06-17T11:11:12.057Z] > refreshing access token with scopes: []
+[debug] [2025-06-17T11:11:12.059Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-06-17T11:11:12.059Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-06-17T11:11:12.225Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-06-17T11:11:12.225Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-06-17T11:11:12.414Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/rakshana-hosierys/services/cloudresourcemanager.googleapis.com [none]
+[debug] [2025-06-17T11:11:12.414Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/rakshana-hosierys/services/cloudresourcemanager.googleapis.com x-goog-quota-user=projects/rakshana-hosierys
+[debug] [2025-06-17T11:11:14.060Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/rakshana-hosierys/services/cloudresourcemanager.googleapis.com 200
+[debug] [2025-06-17T11:11:14.060Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/rakshana-hosierys/services/cloudresourcemanager.googleapis.com [omitted]
+[debug] [2025-06-17T11:11:14.061Z] Checked if tokens are valid: true, expires at: 1750162271225
+[debug] [2025-06-17T11:11:14.061Z] Checked if tokens are valid: true, expires at: 1750162271225
+[debug] [2025-06-17T11:11:14.061Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/rakshana-hosierys [none]
+[debug] [2025-06-17T11:11:15.418Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/rakshana-hosierys 200
+[debug] [2025-06-17T11:11:15.418Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/rakshana-hosierys {"projectNumber":"352024844900","projectId":"rakshana-hosierys","lifecycleState":"ACTIVE","name":"Rakshana Hosierys","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2025-05-08T14:54:41.143361Z"}
+[debug] [2025-06-17T11:11:15.451Z] [logging] Logging Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2025-06-17T11:11:15.451Z] [apphosting] App Hosting Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2025-06-17T11:11:15.451Z] assigned listening specs for emulators {"user":{"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000}],"auth":[{"address":"127.0.0.1","family":"IPv4","port":9099}],"firestore":[{"address":"127.0.0.1","family":"IPv4","port":8080}],"firestore.websocket":[{"address":"127.0.0.1","family":"IPv4","port":9150}],"hosting":[{"address":"127.0.0.1","family":"IPv4","port":5000}],"storage":[{"address":"127.0.0.1","family":"IPv4","port":9199}],"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"apphosting":[{"address":"127.0.0.1","family":"IPv4","port":5002}]},"metadata":{"message":"assigned listening specs for emulators"}}
+[debug] [2025-06-17T11:11:15.457Z] [hub] writing locator at C:\Users\SAC\AppData\Local\Temp\hub-rakshana-hosierys.json
+[debug] [2025-06-17T11:11:15.466Z] [Extensions] Started Extensions emulator, this is a noop.
+[debug] [2025-06-17T11:11:15.470Z] [eventarc] Eventarc Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2025-06-17T11:11:15.470Z] [tasks] Cloud Tasks Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2025-06-17T11:11:15.470Z] late-assigned ports for functions and eventarc emulators {"user":{"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000}],"auth":[{"address":"127.0.0.1","family":"IPv4","port":9099}],"firestore":[{"address":"127.0.0.1","family":"IPv4","port":8080}],"firestore.websocket":[{"address":"127.0.0.1","family":"IPv4","port":9150}],"hosting":[{"address":"127.0.0.1","family":"IPv4","port":5000}],"storage":[{"address":"127.0.0.1","family":"IPv4","port":9199}],"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"apphosting":[{"address":"127.0.0.1","family":"IPv4","port":5002}],"functions":[{"address":"127.0.0.1","family":"IPv4","port":5001}],"eventarc":[{"address":"127.0.0.1","family":"IPv4","port":9299}],"tasks":[{"address":"127.0.0.1","family":"IPv4","port":9499}]},"metadata":{"message":"late-assigned ports for functions and eventarc emulators"}}
 [warn] !  functions: The following emulators are not running, calls to these services from the Functions emulator will affect production: database, pubsub, dataconnect {"metadata":{"emulator":{"name":"functions"},"message":"The following emulators are not running, calls to these services from the Functions emulator will affect production: \u001b[1mdatabase, pubsub, dataconnect\u001b[22m"}}
-[debug] [2025-06-15T08:52:35.012Z] defaultcredentials: writing to file C:\Users\SAC\AppData\Roaming\firebase\rakshanahosierys_gmail_com_application_default_credentials.json
-[debug] [2025-06-15T08:52:35.013Z] Setting GAC to C:\Users\SAC\AppData\Roaming\firebase\rakshanahosierys_gmail_com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to C:\\Users\\SAC\\AppData\\Roaming\\firebase\\rakshanahosierys_gmail_com_application_default_credentials.json"}}
-[debug] [2025-06-15T08:52:35.013Z] Checked if tokens are valid: true, expires at: 1749981150491
-[debug] [2025-06-15T08:52:35.013Z] Checked if tokens are valid: true, expires at: 1749981150491
-[debug] [2025-06-15T08:52:35.013Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/rakshana-hosierys/adminSdkConfig [none]
-[debug] [2025-06-15T08:52:35.623Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/rakshana-hosierys/adminSdkConfig 200
-[debug] [2025-06-15T08:52:35.624Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/rakshana-hosierys/adminSdkConfig {"projectId":"rakshana-hosierys","storageBucket":"rakshana-hosierys.firebasestorage.app"}
+[debug] [2025-06-17T11:11:15.514Z] defaultcredentials: writing to file C:\Users\SAC\AppData\Roaming\firebase\rakshanahosierys_gmail_com_application_default_credentials.json
+[debug] [2025-06-17T11:11:15.515Z] Setting GAC to C:\Users\SAC\AppData\Roaming\firebase\rakshanahosierys_gmail_com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to C:\\Users\\SAC\\AppData\\Roaming\\firebase\\rakshanahosierys_gmail_com_application_default_credentials.json"}}
+[debug] [2025-06-17T11:11:15.516Z] Checked if tokens are valid: true, expires at: 1750162271225
+[debug] [2025-06-17T11:11:15.516Z] Checked if tokens are valid: true, expires at: 1750162271225
+[debug] [2025-06-17T11:11:15.516Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/rakshana-hosierys/adminSdkConfig [none]
+[debug] [2025-06-17T11:11:16.158Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/rakshana-hosierys/adminSdkConfig 200
+[debug] [2025-06-17T11:11:16.158Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/rakshana-hosierys/adminSdkConfig {"projectId":"rakshana-hosierys","storageBucket":"rakshana-hosierys.firebasestorage.app"}
 [info] i  firestore: Importing data from E:\Compete\rakshanahosierys\seed\firestore_export\firestore_export.overall_export_metadata {"metadata":{"emulator":{"name":"firestore"},"message":"Importing data from E:\\Compete\\rakshanahosierys\\seed\\firestore_export\\firestore_export.overall_export_metadata"}}
-[debug] [2025-06-15T08:52:35.785Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: auto_download"}}
-[debug] [2025-06-15T08:52:35.786Z] Ignoring unsupported arg: single_project_mode_error {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: single_project_mode_error"}}
-[debug] [2025-06-15T08:52:35.786Z] Starting Firestore Emulator with command {"binary":"java","args":["-Dgoogle.cloud_firestore.debug_log_level=FINE","-Duser.language=en","-jar","C:\\Users\\SAC\\.cache\\firebase\\emulators\\cloud-firestore-emulator-v1.19.8.jar","--host","127.0.0.1","--port",8080,"--websocket_port",9150,"--project_id","rakshana-hosierys","--seed_from_export","E:\\Compete\\rakshanahosierys\\seed\\firestore_export\\firestore_export.overall_export_metadata","--rules","E:\\Compete\\rakshanahosierys\\firestore.rules","--single_project_mode",true,"--functions_emulator","127.0.0.1:5001"],"optionalArgs":["port","webchannel_port","host","rules","websocket_port","functions_emulator","seed_from_export","project_id","single_project_mode"],"joinArgs":false,"shell":false,"port":8080} {"metadata":{"emulator":{"name":"firestore"},"message":"Starting Firestore Emulator with command {\"binary\":\"java\",\"args\":[\"-Dgoogle.cloud_firestore.debug_log_level=FINE\",\"-Duser.language=en\",\"-jar\",\"C:\\\\Users\\\\SAC\\\\.cache\\\\firebase\\\\emulators\\\\cloud-firestore-emulator-v1.19.8.jar\",\"--host\",\"127.0.0.1\",\"--port\",8080,\"--websocket_port\",9150,\"--project_id\",\"rakshana-hosierys\",\"--seed_from_export\",\"E:\\\\Compete\\\\rakshanahosierys\\\\seed\\\\firestore_export\\\\firestore_export.overall_export_metadata\",\"--rules\",\"E:\\\\Compete\\\\rakshanahosierys\\\\firestore.rules\",\"--single_project_mode\",true,\"--functions_emulator\",\"127.0.0.1:5001\"],\"optionalArgs\":[\"port\",\"webchannel_port\",\"host\",\"rules\",\"websocket_port\",\"functions_emulator\",\"seed_from_export\",\"project_id\",\"single_project_mode\"],\"joinArgs\":false,\"shell\":false,\"port\":8080}"}}
+[debug] [2025-06-17T11:11:16.277Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2025-06-17T11:11:16.278Z] Ignoring unsupported arg: single_project_mode_error {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: single_project_mode_error"}}
+[debug] [2025-06-17T11:11:16.278Z] Starting Firestore Emulator with command {"binary":"java","args":["-Dgoogle.cloud_firestore.debug_log_level=FINE","-Duser.language=en","-jar","C:\\Users\\SAC\\.cache\\firebase\\emulators\\cloud-firestore-emulator-v1.19.8.jar","--host","127.0.0.1","--port",8080,"--websocket_port",9150,"--project_id","rakshana-hosierys","--seed_from_export","E:\\Compete\\rakshanahosierys\\seed\\firestore_export\\firestore_export.overall_export_metadata","--rules","E:\\Compete\\rakshanahosierys\\firestore.rules","--single_project_mode",true,"--functions_emulator","127.0.0.1:5001"],"optionalArgs":["port","webchannel_port","host","rules","websocket_port","functions_emulator","seed_from_export","project_id","single_project_mode"],"joinArgs":false,"shell":false,"port":8080} {"metadata":{"emulator":{"name":"firestore"},"message":"Starting Firestore Emulator with command {\"binary\":\"java\",\"args\":[\"-Dgoogle.cloud_firestore.debug_log_level=FINE\",\"-Duser.language=en\",\"-jar\",\"C:\\\\Users\\\\SAC\\\\.cache\\\\firebase\\\\emulators\\\\cloud-firestore-emulator-v1.19.8.jar\",\"--host\",\"127.0.0.1\",\"--port\",8080,\"--websocket_port\",9150,\"--project_id\",\"rakshana-hosierys\",\"--seed_from_export\",\"E:\\\\Compete\\\\rakshanahosierys\\\\seed\\\\firestore_export\\\\firestore_export.overall_export_metadata\",\"--rules\",\"E:\\\\Compete\\\\rakshanahosierys\\\\firestore.rules\",\"--single_project_mode\",true,\"--functions_emulator\",\"127.0.0.1:5001\"],\"optionalArgs\":[\"port\",\"webchannel_port\",\"host\",\"rules\",\"websocket_port\",\"functions_emulator\",\"seed_from_export\",\"project_id\",\"single_project_mode\"],\"joinArgs\":false,\"shell\":false,\"port\":8080}"}}
 [info] i  firestore: Firestore Emulator logging to firestore-debug.log {"metadata":{"emulator":{"name":"firestore"},"message":"Firestore Emulator logging to \u001b[1mfirestore-debug.log\u001b[22m"}}
 [info] +  firestore: Firestore Emulator UI websocket is running on 9150. {"metadata":{"emulator":{"name":"firestore"},"message":"Firestore Emulator UI websocket is running on 9150."}}
 [info] i  auth: Importing config from E:\Compete\rakshanahosierys\seed\auth_export\config.json {"metadata":{"emulator":{"name":"auth"},"message":"Importing config from E:\\Compete\\rakshanahosierys\\seed\\auth_export\\config.json"}}
 [info] i  auth: Importing accounts from E:\Compete\rakshanahosierys\seed\auth_export\accounts.json {"metadata":{"emulator":{"name":"auth"},"message":"Importing accounts from E:\\Compete\\rakshanahosierys\\seed\\auth_export\\accounts.json"}}
-[debug] [2025-06-15T08:52:43.179Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"storage"},"message":"Ignoring unsupported arg: port"}}
-[debug] [2025-06-15T08:52:43.925Z] Temp file directory for storage emulator: C:\Users\SAC\AppData\Local\Temp/firebase/storage/blobs {"metadata":{"emulator":{"name":"storage"},"message":"Temp file directory for storage emulator: C:\\Users\\SAC\\AppData\\Local\\Temp/firebase/storage/blobs"}}
-[debug] [2025-06-15T08:52:43.975Z] Checked if tokens are valid: true, expires at: 1749981150491
-[debug] [2025-06-15T08:52:43.975Z] Checked if tokens are valid: true, expires at: 1749981150491
-[debug] [2025-06-15T08:52:43.976Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/rakshana-hosierys/sites 
-[debug] [2025-06-15T08:52:44.946Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/rakshana-hosierys/sites 200
-[debug] [2025-06-15T08:52:44.946Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/rakshana-hosierys/sites {"sites":[{"name":"projects/rakshana-hosierys/sites/admin-rakshana-hosierys","defaultUrl":"https://admin-rakshana-hosierys.web.app","appId":"1:352024844900:web:f9596f6b02fb8875919d71","type":"USER_SITE"},{"name":"projects/rakshana-hosierys/sites/rakshana-hosierys","defaultUrl":"https://rakshana-hosierys.web.app","appId":"1:352024844900:web:9c4c522f988b7e5d919d71","type":"DEFAULT_SITE"}]}
-[debug] [2025-06-15T08:52:44.947Z] Checked if tokens are valid: true, expires at: 1749981150491
-[debug] [2025-06-15T08:52:44.947Z] Checked if tokens are valid: true, expires at: 1749981150491
-[debug] [2025-06-15T08:52:44.947Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/rakshana-hosierys/webApps/1:352024844900:web:9c4c522f988b7e5d919d71/config [none]
-[debug] [2025-06-15T08:52:46.089Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/rakshana-hosierys/webApps/1:352024844900:web:9c4c522f988b7e5d919d71/config 200
-[debug] [2025-06-15T08:52:46.090Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/rakshana-hosierys/webApps/1:352024844900:web:9c4c522f988b7e5d919d71/config {"projectId":"rakshana-hosierys","appId":"1:352024844900:web:9c4c522f988b7e5d919d71","storageBucket":"rakshana-hosierys.firebasestorage.app","apiKey":"AIzaSyAM-XaSZ53EoJndelNjUd96qDNDCleSLQM","authDomain":"rakshana-hosierys.firebaseapp.com","messagingSenderId":"352024844900","measurementId":"G-X7J7GJ2VC7"}
-[debug] [2025-06-15T08:52:46.099Z] Checked if tokens are valid: true, expires at: 1749981150491
-[debug] [2025-06-15T08:52:46.099Z] Checked if tokens are valid: true, expires at: 1749981150491
-[debug] [2025-06-15T08:52:46.099Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/rakshana-hosierys [none]
-[debug] [2025-06-15T08:52:46.385Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/rakshana-hosierys 200
-[debug] [2025-06-15T08:52:46.385Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/rakshana-hosierys {"projectId":"rakshana-hosierys","projectNumber":"352024844900","displayName":"Rakshana Hosierys","name":"projects/rakshana-hosierys","resources":{"hostingSite":"rakshana-hosierys"},"state":"ACTIVE","etag":"1_e54c2a5b-3ef3-4066-ad32-af79ffecfac6"}
+[debug] [2025-06-17T11:11:23.532Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"storage"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2025-06-17T11:11:24.290Z] Temp file directory for storage emulator: C:\Users\SAC\AppData\Local\Temp/firebase/storage/blobs {"metadata":{"emulator":{"name":"storage"},"message":"Temp file directory for storage emulator: C:\\Users\\SAC\\AppData\\Local\\Temp/firebase/storage/blobs"}}
+[debug] [2025-06-17T11:11:24.353Z] Checked if tokens are valid: true, expires at: 1750162271225
+[debug] [2025-06-17T11:11:24.353Z] Checked if tokens are valid: true, expires at: 1750162271225
+[debug] [2025-06-17T11:11:24.353Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/rakshana-hosierys/sites 
+[debug] [2025-06-17T11:11:25.259Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/rakshana-hosierys/sites 200
+[debug] [2025-06-17T11:11:25.259Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/rakshana-hosierys/sites {"sites":[{"name":"projects/rakshana-hosierys/sites/admin-rakshana-hosierys","defaultUrl":"https://admin-rakshana-hosierys.web.app","appId":"1:352024844900:web:f9596f6b02fb8875919d71","type":"USER_SITE"},{"name":"projects/rakshana-hosierys/sites/rakshana-hosierys","defaultUrl":"https://rakshana-hosierys.web.app","appId":"1:352024844900:web:9c4c522f988b7e5d919d71","type":"DEFAULT_SITE"}]}
+[debug] [2025-06-17T11:11:25.259Z] Checked if tokens are valid: true, expires at: 1750162271225
+[debug] [2025-06-17T11:11:25.259Z] Checked if tokens are valid: true, expires at: 1750162271225
+[debug] [2025-06-17T11:11:25.259Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/rakshana-hosierys/webApps/1:352024844900:web:9c4c522f988b7e5d919d71/config [none]
+[debug] [2025-06-17T11:11:26.087Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/rakshana-hosierys/webApps/1:352024844900:web:9c4c522f988b7e5d919d71/config 200
+[debug] [2025-06-17T11:11:26.087Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/rakshana-hosierys/webApps/1:352024844900:web:9c4c522f988b7e5d919d71/config {"projectId":"rakshana-hosierys","appId":"1:352024844900:web:9c4c522f988b7e5d919d71","storageBucket":"rakshana-hosierys.firebasestorage.app","apiKey":"AIzaSyAM-XaSZ53EoJndelNjUd96qDNDCleSLQM","authDomain":"rakshana-hosierys.firebaseapp.com","messagingSenderId":"352024844900","measurementId":"G-X7J7GJ2VC7"}
+[debug] [2025-06-17T11:11:26.132Z] Checked if tokens are valid: true, expires at: 1750162271225
+[debug] [2025-06-17T11:11:26.132Z] Checked if tokens are valid: true, expires at: 1750162271225
+[debug] [2025-06-17T11:11:26.133Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/rakshana-hosierys [none]
+[debug] [2025-06-17T11:11:26.686Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/rakshana-hosierys 200
+[debug] [2025-06-17T11:11:26.686Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/rakshana-hosierys {"projectId":"rakshana-hosierys","projectNumber":"352024844900","displayName":"Rakshana Hosierys","name":"projects/rakshana-hosierys","resources":{"hostingSite":"rakshana-hosierys"},"state":"ACTIVE","etag":"1_e54c2a5b-3ef3-4066-ad32-af79ffecfac6"}
 [info] i  hosting[rakshana-hosierys]: Serving hosting files from: .next {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1m.next\u001b[22m"}}
 [info] +  hosting[rakshana-hosierys]: Local server: http://127.0.0.1:5000 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://127.0.0.1:5000\u001b[22m\u001b[24m"}}
-[debug] [2025-06-15T08:52:46.409Z] Checked if tokens are valid: true, expires at: 1749981150491
-[debug] [2025-06-15T08:52:46.409Z] Checked if tokens are valid: true, expires at: 1749981150491
-[debug] [2025-06-15T08:52:46.410Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/rakshana-hosierys/secrets/webapp-firebase-api-key/versions/latest:access [none]
-[debug] [2025-06-15T08:52:47.129Z] <<< [apiv2][status] GET https://secretmanager.googleapis.com/v1/projects/rakshana-hosierys/secrets/webapp-firebase-api-key/versions/latest:access 200
-[debug] [2025-06-15T08:52:47.130Z] <<< [apiv2][body] GET https://secretmanager.googleapis.com/v1/projects/rakshana-hosierys/secrets/webapp-firebase-api-key/versions/latest:access {"name":"projects/352024844900/secrets/webapp-firebase-api-key/versions/1","payload":{"data":"QUl6YVN5QU0tWGFTWjUzRW9KbmRlbE5qVWQ5NnFETkRDbGVTTFFN","dataCrc32c":"2727698283"}}
-[debug] [2025-06-15T08:52:47.131Z] Checked if tokens are valid: true, expires at: 1749981150491
-[debug] [2025-06-15T08:52:47.131Z] Checked if tokens are valid: true, expires at: 1749981150491
-[debug] [2025-06-15T08:52:47.131Z] >>> [apiv2][query] GET https://firebaseapphosting.googleapis.com/v1beta/projects/rakshana-hosierys/locations/-/backends 
-[debug] [2025-06-15T08:52:48.938Z] <<< [apiv2][status] GET https://firebaseapphosting.googleapis.com/v1beta/projects/rakshana-hosierys/locations/-/backends 200
-[debug] [2025-06-15T08:52:48.939Z] <<< [apiv2][body] GET https://firebaseapphosting.googleapis.com/v1beta/projects/rakshana-hosierys/locations/-/backends {"backends":[{"name":"projects/rakshana-hosierys/locations/us-central1/backends/rakshanahosierys","createTime":"2025-06-08T19:05:53.251556582Z","updateTime":"2025-06-14T05:24:48.569535Z","uri":"rakshanahosierys--rakshana-hosierys.us-central1.hosted.app","managedResources":[{"runService":{"service":"projects/352024844900/locations/us-central1/services/rakshanahosierys"}}],"codebase":{"repository":"projects/rakshana-hosierys/locations/us-central1/connections/apphosting-github-conn-ngdbkq9/gitRepositoryLinks/rakshanahosierys-rakshana-hosierys","rootDirectory":"/"},"uid":"3ea3126a-8a2e-4214-bf5f-a0da945a6ee5","etag":"zf-enTCA4juHnUH2UQKR_pNJD4ll6UaDjvL6F-_ApZs","reconciling":false,"servingLocality":"GLOBAL_ACCESS","serviceAccount":"firebase-app-hosting-compute@rakshana-hosierys.iam.gserviceaccount.com","appId":"1:352024844900:web:9c4c522f988b7e5d919d71","environment":"prod"}]}
-[debug] [2025-06-15T08:52:48.940Z] Checked if tokens are valid: true, expires at: 1749981150491
-[debug] [2025-06-15T08:52:48.940Z] Checked if tokens are valid: true, expires at: 1749981150491
-[debug] [2025-06-15T08:52:48.940Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:352024844900:web:9c4c522f988b7e5d919d71/config [none]
-[debug] [2025-06-15T08:52:49.667Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:352024844900:web:9c4c522f988b7e5d919d71/config 200
-[debug] [2025-06-15T08:52:49.667Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:352024844900:web:9c4c522f988b7e5d919d71/config {"projectId":"rakshana-hosierys","appId":"1:352024844900:web:9c4c522f988b7e5d919d71","storageBucket":"rakshana-hosierys.firebasestorage.app","apiKey":"AIzaSyAM-XaSZ53EoJndelNjUd96qDNDCleSLQM","authDomain":"rakshana-hosierys.firebaseapp.com","messagingSenderId":"352024844900","measurementId":"G-X7J7GJ2VC7"}
+[debug] [2025-06-17T11:11:26.729Z] Checked if tokens are valid: true, expires at: 1750162271225
+[debug] [2025-06-17T11:11:26.729Z] Checked if tokens are valid: true, expires at: 1750162271225
+[debug] [2025-06-17T11:11:26.730Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/rakshana-hosierys/secrets/webapp-firebase-api-key/versions/latest:access [none]
+[debug] [2025-06-17T11:11:27.379Z] <<< [apiv2][status] GET https://secretmanager.googleapis.com/v1/projects/rakshana-hosierys/secrets/webapp-firebase-api-key/versions/latest:access 200
+[debug] [2025-06-17T11:11:27.379Z] <<< [apiv2][body] GET https://secretmanager.googleapis.com/v1/projects/rakshana-hosierys/secrets/webapp-firebase-api-key/versions/latest:access {"name":"projects/352024844900/secrets/webapp-firebase-api-key/versions/1","payload":{"data":"QUl6YVN5QU0tWGFTWjUzRW9KbmRlbE5qVWQ5NnFETkRDbGVTTFFN","dataCrc32c":"2727698283"}}
+[debug] [2025-06-17T11:11:27.380Z] Checked if tokens are valid: true, expires at: 1750162271225
+[debug] [2025-06-17T11:11:27.380Z] Checked if tokens are valid: true, expires at: 1750162271225
+[debug] [2025-06-17T11:11:27.381Z] >>> [apiv2][query] GET https://firebaseapphosting.googleapis.com/v1beta/projects/rakshana-hosierys/locations/-/backends 
+[debug] [2025-06-17T11:11:29.105Z] <<< [apiv2][status] GET https://firebaseapphosting.googleapis.com/v1beta/projects/rakshana-hosierys/locations/-/backends 200
+[debug] [2025-06-17T11:11:29.105Z] <<< [apiv2][body] GET https://firebaseapphosting.googleapis.com/v1beta/projects/rakshana-hosierys/locations/-/backends {"backends":[{"name":"projects/rakshana-hosierys/locations/us-central1/backends/rakshanahosierys","createTime":"2025-06-08T19:05:53.251556582Z","updateTime":"2025-06-15T10:14:01.563511Z","uri":"rakshanahosierys--rakshana-hosierys.us-central1.hosted.app","managedResources":[{"runService":{"service":"projects/352024844900/locations/us-central1/services/rakshanahosierys"}}],"codebase":{"repository":"projects/rakshana-hosierys/locations/us-central1/connections/apphosting-github-conn-ngdbkq9/gitRepositoryLinks/rakshanahosierys-rakshana-hosierys","rootDirectory":"/"},"uid":"3ea3126a-8a2e-4214-bf5f-a0da945a6ee5","etag":"zf-enTCA4juHnUH2UQKR_pNJD4ll6UaDjvL6F-_ApZs","reconciling":false,"servingLocality":"GLOBAL_ACCESS","serviceAccount":"firebase-app-hosting-compute@rakshana-hosierys.iam.gserviceaccount.com","appId":"1:352024844900:web:9c4c522f988b7e5d919d71","environment":"prod"}]}
+[debug] [2025-06-17T11:11:29.106Z] Checked if tokens are valid: true, expires at: 1750162271225
+[debug] [2025-06-17T11:11:29.106Z] Checked if tokens are valid: true, expires at: 1750162271225
+[debug] [2025-06-17T11:11:29.106Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:352024844900:web:9c4c522f988b7e5d919d71/config [none]
+[debug] [2025-06-17T11:11:29.831Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:352024844900:web:9c4c522f988b7e5d919d71/config 200
+[debug] [2025-06-17T11:11:29.831Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:352024844900:web:9c4c522f988b7e5d919d71/config {"projectId":"rakshana-hosierys","appId":"1:352024844900:web:9c4c522f988b7e5d919d71","storageBucket":"rakshana-hosierys.firebasestorage.app","apiKey":"AIzaSyAM-XaSZ53EoJndelNjUd96qDNDCleSLQM","authDomain":"rakshana-hosierys.firebaseapp.com","messagingSenderId":"352024844900","measurementId":"G-X7J7GJ2VC7"}
 [info] i  apphosting: starting app with: 'npm run dev' {"metadata":{"emulator":{"name":"apphosting"},"message":"starting app with: 'npm run dev'"}}
-[debug] [2025-06-15T08:52:51.854Z] [Extensions] Connecting Extensions emulator, this is a noop.
+[debug] [2025-06-17T11:11:32.064Z] [Extensions] Connecting Extensions emulator, this is a noop.
 [info] i  apphosting: connecting apphosting emulator {"metadata":{"emulator":{"name":"apphosting"},"message":"connecting apphosting emulator"}}
 [info] i  functions: Watching "E:\Compete\rakshanahosierys\functions" for Cloud Functions... {"metadata":{"emulator":{"name":"functions"},"message":"Watching \"E:\\Compete\\rakshanahosierys\\functions\" for Cloud Functions..."}}
-[debug] [2025-06-15T08:52:51.860Z] Validating nodejs source
-[debug] [2025-06-15T08:52:52.604Z] > [functions] package.json contents: {
+[debug] [2025-06-17T11:11:32.070Z] Validating nodejs source
+[debug] [2025-06-17T11:11:32.797Z] > [functions] package.json contents: {
   "name": "functions",
   "description": "Cloud Functions for Firebase",
   "scripts": {
@@ -121,19 +118,19 @@ Java HotSpot(TM) 64-Bit Server VM (build 22.0.2+9-70, mixed mode, sharing)
   },
   "private": true
 }
-[debug] [2025-06-15T08:52:52.605Z] Building nodejs source
-[debug] [2025-06-15T08:52:52.605Z] Failed to find version of module node: reached end of search path E:\Compete\rakshanahosierys\functions\node_modules
+[debug] [2025-06-17T11:11:32.797Z] Building nodejs source
+[debug] [2025-06-17T11:11:32.798Z] Failed to find version of module node: reached end of search path E:\Compete\rakshanahosierys\functions\node_modules
 [warn] !  functions: Your requested "node" version "22" doesn't match your global version "20". Using node@20 from host. 
-[debug] [2025-06-15T08:52:52.608Z] Could not find functions.yaml. Must use http discovery
-[debug] [2025-06-15T08:52:52.613Z] Found firebase-functions binary at 'E:\Compete\rakshanahosierys\functions\node_modules\.bin\firebase-functions'
-[info] Serving at port 8356
+[debug] [2025-06-17T11:11:32.799Z] Could not find functions.yaml. Must use http discovery
+[debug] [2025-06-17T11:11:32.804Z] Found firebase-functions binary at 'E:\Compete\rakshanahosierys\functions\node_modules\.bin\firebase-functions'
+[info] Serving at port 8238
 
-[debug] [2025-06-15T08:52:53.111Z] Got response from /__/functions.yaml {"endpoints":{"processSecureCheckout":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","labels":{},"callableTrigger":{},"entryPoint":"processSecureCheckout"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{}}
-[debug] [2025-06-15T08:52:58.148Z] defaultcredentials: writing to file C:\Users\SAC\AppData\Roaming\firebase\rakshanahosierys_gmail_com_application_default_credentials.json
-[debug] [2025-06-15T08:52:58.148Z] Setting GAC to C:\Users\SAC\AppData\Roaming\firebase\rakshanahosierys_gmail_com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to C:\\Users\\SAC\\AppData\\Roaming\\firebase\\rakshanahosierys_gmail_com_application_default_credentials.json"}}
+[debug] [2025-06-17T11:11:33.355Z] Got response from /__/functions.yaml {"endpoints":{"processSecureCheckout":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","labels":{},"callableTrigger":{},"entryPoint":"processSecureCheckout"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{}}
+[debug] [2025-06-17T11:11:38.380Z] defaultcredentials: writing to file C:\Users\SAC\AppData\Roaming\firebase\rakshanahosierys_gmail_com_application_default_credentials.json
+[debug] [2025-06-17T11:11:38.381Z] Setting GAC to C:\Users\SAC\AppData\Roaming\firebase\rakshanahosierys_gmail_com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to C:\\Users\\SAC\\AppData\\Roaming\\firebase\\rakshanahosierys_gmail_com_application_default_credentials.json"}}
 [info] +  functions: Loaded functions definitions from source: processSecureCheckout. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: processSecureCheckout."}}
 [info] +  functions[us-central1-processSecureCheckout]: http function initialized (http://127.0.0.1:5001/rakshana-hosierys/us-central1/processSecureCheckout). {"metadata":{"emulator":{"name":"functions"},"message":"\u001b[1mhttp\u001b[22m function initialized (http://127.0.0.1:5001/rakshana-hosierys/us-central1/processSecureCheckout)."}}
-[debug] [2025-06-15T08:52:58.155Z] Could not find VSCode notification endpoint: FetchError: request to http://localhost:40001/vscode/notify failed, reason: . If you are not running the Firebase Data Connect VSCode extension, this is expected and not an issue.
+[debug] [2025-06-17T11:11:38.387Z] Could not find VSCode notification endpoint: FetchError: request to http://localhost:40001/vscode/notify failed, reason: . If you are not running the Firebase Data Connect VSCode extension, this is expected and not an issue.
 [info] 
 ┌─────────────────────────────────────────────────────────────┐
 │ ✔  All emulators ready! It is now safe to connect your app. │
