@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { ProductCard } from "@/components/shopCards/ProductCard";
-import { products1 } from "@/data/products";
+import { products111 } from "@/data/products";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 
@@ -50,7 +50,7 @@ export default function Products() {
               nextEl: ".snbn136",
             }}
           >
-            {products1.map((product, i) => (
+            {products111.map((product, i) => (
               <SwiperSlide key={i} className="swiper-slide">
                 <ProductCard product={product} />
               </SwiperSlide>

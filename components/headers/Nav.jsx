@@ -39,8 +39,10 @@ export default function Nav({ isArrow = true, textColor = "", Linkfs = "" }) {
           const categories = data.categories || [];
           const newArrivalsCount = data.newArrivalsCount || 0; // Assuming you store this count in metadata
 
+          const filteredCategories = categories.filter(cat => cat.name !== "Men");
+
           // Transform categories into the format expected by your menu
-          const transformedLinks = categories.map(cat => ({
+          const transformedLinks = filteredCategories.map(cat => ({
             text: cat.name,
             href: `/shop-default?filter=${encodeURIComponent(cat.name)}`, // Encode category name for URL
             filterValue: cat.name, // Store the filter value for active check

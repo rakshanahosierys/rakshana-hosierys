@@ -22,7 +22,9 @@ export default function ToolbarShop() {
           const data = docSnap.data();
           const categories = data.categories || [];
 
-          const transformedLinks = categories.map(cat => ({
+          const filteredCategories = categories.filter(cat => cat.name !== "Men");
+
+          const transformedLinks = filteredCategories.map(cat => ({
             name: cat.name,
             href: `/shop-default?filter=${encodeURIComponent(cat.name)}`,
             image: cat.image,

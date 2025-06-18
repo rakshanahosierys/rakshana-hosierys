@@ -71,14 +71,14 @@ export default function Header7() {
                     Shop
                   </Link>
                 </li>
-                <li className={`categories-item ${pathname === '/shop-default' && searchParams.get('filter') === 'Men'
+                {/* <li className={`categories-item ${pathname === '/shop-default' && searchParams.get('filter') === 'Men'
                   ? 'active'
                   : ''
                   }`}>
                   <Link href={`/shop-default?filter=Men`} className="text-uppercase">
                     Men
                   </Link>
-                </li>
+                </li> */}
                 <li className={`categories-item ${pathname === '/shop-default' && searchParams.get('filter') === 'Women'
                   ? 'active'
                   : ''
@@ -259,14 +259,14 @@ export default function Header7() {
                   Shop
                 </Link>
               </li>
-              <li className={`categories-item ${pathname === '/shop-default' && searchParams.get('filter') === 'Men'
+              {/* <li className={`categories-item ${pathname === '/shop-default' && searchParams.get('filter') === 'Men'
                 ? 'active'
                 : ''
                 }`}>
                 <Link href={`/shop-default?filter=Men`} className="text-uppercase">
                   Men
                 </Link>
-              </li>
+              </li> */}
               <li className={`categories-item ${pathname === '/shop-default' && searchParams.get('filter') === 'Women'
                 ? 'active'
                 : ''

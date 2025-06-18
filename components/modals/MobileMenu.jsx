@@ -36,7 +36,9 @@ export default function MobileMenu() {
           const data = docSnap.data();
           const categories = data.categories || [];
 
-          const transformedLinks = categories.map(cat => ({
+          const filteredCategories = categories.filter(cat => cat.name !== "Men");
+
+          const transformedLinks = filteredCategories.map(cat => ({
             label: cat.name, // Using 'label' for menu items
             href: `/shop-default?filter=${encodeURIComponent(cat.name)}`,
             filterValue: cat.name, // Store the filter value for active check

@@ -33,9 +33,10 @@ export default function Categories2() {
         let fetchedCategories = [];
         if (productFilterSnap.exists()) {
           const data = productFilterSnap.data();
+          const filteredFirestoreCategories = (data.categories || []).filter(cat => cat.name !== "Men");
           // Assuming the categories are stored in a field named 'categories' within this document
           // And that 'categories' is an array of objects with id, image, link, name
-          fetchedCategories = (data.categories || []).map(cat => ({
+          fetchedCategories = filteredFirestoreCategories.map(cat => ({
             id: cat.id,
             imgSrc: cat.image, // Map Firestore 'image' to component 'imgSrc'
             link: cat.link,

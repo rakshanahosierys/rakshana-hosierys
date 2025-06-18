@@ -2,7 +2,7 @@
 import { layouts, sortingOptions } from "@/data/shop";
 import { useState } from "react";
 import Pagination from "../common/Pagination";
-import { products1 } from "@/data/products";
+import { products111 } from "@/data/products";
 import Productcard4 from "../shopCards/Productcart4";
 import ShopFilter from "./ShopFilter";
 import Sorting from "./Sorting";
