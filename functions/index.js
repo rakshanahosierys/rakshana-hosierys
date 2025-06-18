@@ -1,6 +1,8 @@
-const functions = require('firebase-functions');
+const functions = require('firebase-functions/v1');
 const admin = require('firebase-admin');
 const next = require("next");
+
+const sgMail = require('@sendgrid/mail');
 
 // Initialize Firebase Admin SDK once when the function starts
 // This is crucial for interacting with Firestore, Auth, etc.
@@ -235,3 +237,117 @@ exports.processSecureCheckout = functions.https.onCall(async (data, context) => 
         }
     }
 });
+
+// Define which secrets this function needs to access.
+// These names must match the exact names of the secrets you created in Google Cloud Secret Manager.
+// The values will be exposed as environment variables (process.env.SECRET_NAME)
+// when the deployed function runs.
+const runtimeOpts = {
+  secrets: ['SENDGRID_API_KEY', 'RAKSHANA_ADMIN_EMAIL']
+};
+
+// IMPORTANT: Do NOT define `adminEmail` or `sendGridApiKey` directly from `process.env` here.
+// `process.env` is only guaranteed to be populated by `runWith` when the function is EXECUTED.
+// We will access these values inside the `onCreate` callback.
+
+/**
+ * Cloud Function (1st Gen) to send an order confirmation email to the admin.
+ * Triggered when a new document is created in the 'orders' collection.
+ */
+exports.sendOrderConfirmationEmail = functions
+   .runWith(runtimeOpts) // Attach the runtime options, including secrets for deployment
+  .firestore
+  .document('orders/{orderId}')
+  .onCreate(async (snap, context) => {
+    // Access secrets from process.env inside the function's execution scope.
+    const sendGridApiKey = process.env.SENDGRID_API_KEY;
+    const adminEmail = process.env.RAKSHANA_ADMIN_EMAIL;
+
+    // --- Validate and Set SendGrid API Key ---
+    if (!sendGridApiKey || !sendGridApiKey.startsWith('SG.')) {
+        console.error("ERROR: SendGrid API Key (SENDGRID_API_KEY) is missing or invalid. Make sure it's set in Google Cloud Secret Manager.");
+        // Return null or throw an error to indicate failure and prevent email sending
+        return null;
+    }
+    sgMail.setApiKey(sendGridApiKey);
+
+    // --- Validate Admin Email ---
+    if (!adminEmail) {
+        console.error("ERROR: Admin email (RAKSHANA_ADMIN_EMAIL) is missing. Make sure it's set in Google Cloud Secret Manager.");
+        return null;
+    }
+
+    const orderData = snap.data();
+    const orderId = context.params.orderId;
+
+    // Extract customer and order details from the nested 'customerDetails' object
+    const customerEmail = orderData.customerDetails.email;
+    const customerName = orderData.customerDetails.name || 'Valued Customer';
+    const customerPhone = orderData.customerDetails.phone;
+    const customerAddress = `${orderData.customerDetails.address}, ${orderData.customerDetails.city}, ${orderData.customerDetails.state}, ${orderData.customerDetails.pinCode}, ${orderData.customerDetails.country}`;
+    
+    const orderTotal = orderData.finalAmount; 
+    const products = orderData.products;
+    const paymentMethod = orderData.paymentMethod;
+    const paymentStatus = orderData.paymentStatus;
+    const orderStatus = orderData.orderStatus;
+    const notes = orderData.notes;
+
+    // Format products for email HTML
+    const productListHtml = products.map(product => `
+      <li>
+        <strong>${product.title}</strong><br>
+        Size: ${product.selectedSize}, Color: ${product.selectedColor.name}<br>
+        Quantity: ${product.quantity} x ₹${product.priceAtPurchase.toFixed(2)}
+      </li>
+    `).join('');
+
+    // --- Email to Admin ---
+    const msgToAdmin = {
+      to: adminEmail, 
+      from: 'rakshanahosierys@gmail.com', // <<--- IMPORTANT: REPLACE THIS with your SendGrid verified sender email (must be verified in SendGrid)
+      subject: `📢 New Order Alert: #${orderId} by ${customerName}`,
+      html: `
+        <p>Hello Admin,</p>
+        <p>A new order #${orderId} has just been placed on your website!</p>
+        
+        <h3>Customer Details:</h3>
+        <ul>
+          <li><strong>Name:</strong> ${customerName}</li>
+          <li><strong>Email:</strong> ${customerEmail}</li>
+          <li><strong>Phone:</strong> ${customerPhone}</li>
+          <li><strong>Address:</strong> ${customerAddress}</li>
+        </ul>
+
+        <h3>Order Details:</h3>
+        <ul>
+          <li><strong>Order ID:</strong> ${orderId}</li>
+          <li><strong>Total Amount:</strong> ₹${orderTotal.toFixed(2)}</li>
+          <li><strong>Payment Method:</strong> ${paymentMethod}</li>
+          <li><strong>Payment Status:</strong> ${paymentStatus}</li>
+          <li><strong>Current Order Status:</strong> ${orderStatus}</li>
+          ${notes ? `<li><strong>Customer Notes:</strong> ${notes}</li>` : ''}
+        </ul>
+
+        <h4>Products Ordered:</h4>
+        <ul>
+          ${productListHtml}
+        </ul>
+        
+        <p>Please log in to your admin panel to review and process this order promptly.</p>
+        <p>Thanks,<br>Your Website Order System</p>
+      `,
+    };
+
+    try {
+      await sgMail.send(msgToAdmin);
+      console.log(`Email sent to admin ${adminEmail} for order ${orderId}`);
+    } catch (error) {
+      console.error(`Error sending email to admin ${adminEmail} for order ${orderId}:`, error);
+      if (error.response) {
+        console.error('SendGrid admin response body:', JSON.stringify(error.response.body));
+      }
+    }
+
+    return null; 
+  });

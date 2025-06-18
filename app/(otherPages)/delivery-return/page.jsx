@@ -49,6 +49,14 @@ export default function page() {
                 </ul>
               </div>
               <div className="box">
+                <h4>Refund</h4>
+                <ul className="tag-list">
+                  <li>
+                    Refunded amount will be credited within 10 to 15 days in original mode of payemnt.
+                  </li>
+                </ul>
+              </div>
+              <div className="box">
                 <h4>Help</h4>
                 <p>
                   We're here for you! Reach out with any questions or concerns.
