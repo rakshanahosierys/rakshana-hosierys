@@ -25,6 +25,9 @@ const ShopFilter = forwardRef(({ products, setFinalSorted, initialFilterCategory
     categories: []
   });
 
+  // State to hold the FILTERED categories for rendering
+  const [displayCategories, setDisplayCategories] = useState([]);
+
   useImperativeHandle(ref, () => ({
     clearFilter,
   }));
@@ -39,7 +42,13 @@ const ShopFilter = forwardRef(({ products, setFinalSorted, initialFilterCategory
       const docRef = doc(db, 'metadata', 'productFilters');
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        setFilterMetadata(docSnap.data());
+        const data = docSnap.data();
+        setFilterMetadata(data); // Store the raw metadata
+        // --- MODIFICATION START ---
+        // Filter categories for display here
+        const filteredForDisplay = (data.categories || []).filter(cat => cat.name !== "Men");
+        setDisplayCategories(filteredForDisplay);
+        // --- MODIFICATION END ---
       }
     };
     fetchMetadata();
@@ -153,7 +162,7 @@ const ShopFilter = forwardRef(({ products, setFinalSorted, initialFilterCategory
             </div>
             <div id="category" className="collapse show">
               <ul className="list-categoris current-scrollbar mb_36">
-                {filterMetadata.categories.map((cat) => (
+                {displayCategories.map((cat) => (
                   <li key={cat.id} className="list-item d-flex gap-12 align-items-center" onClick={() => handleToggle(cat.id, setSelectedCategories)}>
                     <input type="checkbox" readOnly checked={selectedCategories.includes(cat.id)} />
                     <label>

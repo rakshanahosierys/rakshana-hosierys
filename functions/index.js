@@ -305,7 +305,7 @@ exports.sendOrderConfirmationEmail = functions
     // --- Email to Admin ---
     const msgToAdmin = {
       to: adminEmail, 
-      from: 'rakshanahosierys@gmail.com', // <<--- IMPORTANT: REPLACE THIS with your SendGrid verified sender email (must be verified in SendGrid)
+      from: 'admin@rakshanahosierys.in', // <<--- IMPORTANT: REPLACE THIS with your SendGrid verified sender email (must be verified in SendGrid)
       subject: `📢 New Order Alert: #${orderId} by ${customerName}`,
       html: `
         <p>Hello Admin,</p>
