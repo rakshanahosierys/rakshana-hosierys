@@ -1,17 +1,17 @@
 # Settings for Backend (on Cloud Run).
 # See https://firebase.google.com/docs/app-hosting/configure#cloud-run
 runConfig:
-  # minInstances: 0 # Default is 0. Consider setting to 1 for dev/production backends to reduce cold starts.
-  # maxInstances: 100 # Default is 100
-  # concurrency: 80 # Default is 80
-  # cpu: 1 # Default is 1 (1000m). Adjust based on your API's compute needs.
-  # memoryMiB: 512 # Default is 512MiB. Adjust based on your API's memory needs.
+  minInstances: 1 # Default is 0. Consider setting to 1 for dev/production backends to reduce cold starts.
+# maxInstances: 100 # Default is 100
+# concurrency: 80 # Default is 80
+# cpu: 1 # Default is 1 (1000m). Adjust based on your API's compute needs.
+# memoryMiB: 512 # Default is 512MiB. Adjust based on your API's memory needs.
 
 # Environment variables and secrets.
 env:
-  # --- Client-side Firebase Configuration Variables (NEXT_PUBLIC_ prefix) ---
-  # These are safe to expose in client-side code and are part of your Firebase project setup.
-  # The API key is best stored as a secret.
+# --- Client-side Firebase Configuration Variables (NEXT_PUBLIC_ prefix) ---
+# These are safe to expose in client-side code and are part of your Firebase project setup.
+# The API key is best stored as a secret.
   - variable: NEXT_PUBLIC_FIREBASE_API_KEY
     secret: webapp-firebase-api-key # Assumes you have created this secret in Secret Manager.
   - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
@@ -21,7 +21,7 @@ env:
   - variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
     value: rakshana-hosierys.firebasestorage.app
   - variable: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
-    value: '352024844900'
+    value: 352024844900
   - variable: NEXT_PUBLIC_FIREBASE_APP_ID
     value: 1:352024844900:web:9c4c522f988b7e5d919d71
   - variable: NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
