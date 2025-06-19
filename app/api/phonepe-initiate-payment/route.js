@@ -92,7 +92,7 @@ export async function POST(request) {
             // Your `/api/phonepe-callback` endpoint is set up for POST.
             // It's better to make `redirectUrl` a client-side route that then checks status,
             // and `callbackUrl` your server-side webhook.
-
+            // demo
             callbackUrl: `${NEXT_PUBLIC_BASE_URL}/api/phonepe-callback`, // Your server webhook callback
             mobileNumber: orderData.customerDetails?.phone || '9999999999', // Customer's mobile number (ensure it's valid)
             // You might add more details like `message`, `email`, `deviceContext`, etc.
