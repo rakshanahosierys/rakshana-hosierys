@@ -28,7 +28,4 @@ env:
   - variable: NEXT_PUBLIC_BASE_URL
     value: https://dev-rakshana-hosierys--rakshana-hosierys.us-central1.hosted.app
   - variable: GOOGLE_APPLICATION_CREDENTIALS
-    valueFrom:
-      secretKeyRef:
-        key: latest
-        name: RAKSHANA_ADMIN_EMAIL
+    secret: RAKSHANA_ADMIN_EMAIL
