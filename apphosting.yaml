@@ -1,29 +1,19 @@
 # Settings for Backend (on Cloud Run).
 # See https://firebase.google.com/docs/app-hosting/configure#cloud-run
 runConfig:
-  minInstances: 0
-  # maxInstances: 100
-  # concurrency: 80
-  # cpu: 1
-  # memoryMiB: 512
+  # minInstances: 0 # Default is 0. Consider setting to 1 for dev/production backends to reduce cold starts.
+  # maxInstances: 100 # Default is 100
+  # concurrency: 80 # Default is 80
+  # cpu: 1 # Default is 1 (1000m). Adjust based on your API's compute needs.
+  # memoryMiB: 512 # Default is 512MiB. Adjust based on your API's memory needs.
 
-  # Environment variables and secrets.
-  # env:
-  # Configure environment variables.
-  # See https://firebase.google.com/docs/app-hosting/configure#user-defined-environment
-  # - variable: MESSAGE
-  #   value: Hello world!
-  #   availability:
-  #     - BUILD
-  #     - RUNTIME
-
-  # Grant access to secrets in Cloud Secret Manager.
-  # See https://firebase.google.com/docs/app-hosting/configure#secret-parameters
-  # - variable: MY_SECRET
-  #   secret: mySecretRef
+# Environment variables and secrets.
 env:
+  # --- Client-side Firebase Configuration Variables (NEXT_PUBLIC_ prefix) ---
+  # These are safe to expose in client-side code and are part of your Firebase project setup.
+  # The API key is best stored as a secret.
   - variable: NEXT_PUBLIC_FIREBASE_API_KEY
-    secret: webapp-firebase-api-key
+    secret: webapp-firebase-api-key # Assumes you have created this secret in Secret Manager.
   - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
     value: rakshana-hosierys.firebaseapp.com
   - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
@@ -31,8 +21,43 @@ env:
   - variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
     value: rakshana-hosierys.firebasestorage.app
   - variable: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
-    value: 352024844900
+    value: '352024844900'
   - variable: NEXT_PUBLIC_FIREBASE_APP_ID
     value: 1:352024844900:web:9c4c522f988b7e5d919d71
   - variable: NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
     value: G-X7J7GJ2VC7
+
+  # --- PhonePe Integration Variables (for your Next.js API routes) ---
+  # These are sensitive and should be stored as secrets.
+  # Ensure these values/secrets correspond to your UAT (dev) or Production environment.
+  - variable: PHONEPE_MERCHANT_ID
+    secret: TEST-M23ATA461PH4D_25052 # Create this secret with your PhonePe Merchant ID
+  - variable: PHONEPE_SALT_KEY
+    secret: ZGNkMTgxODctZmFmMi00YWIyLWFmZTUtYTQzNjhmZGNjMDE1 # Create this secret with your PhonePe Salt Key
+  - variable: PHONEPE_SALT_INDEX
+    value: '1' # Confirm this index from your PhonePe credentials
+
+  # PhonePe API Endpoints
+  # Adjust these URLs for your Production environment if this is a production backend.
+  - variable: PHONEPE_PAY_API_URL
+    value: https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay # UAT URL
+  - variable: PHONEPE_STATUS_CHECK_API_URL
+    value: https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/status # UAT URL
+
+  # --- Your Application's Public Base URL ---
+  # This is crucial for PhonePe redirects and callbacks to reach your deployed app.
+  # Use the exact public URL of your Firebase App Hosting deployment here.
+  - variable: NEXT_PUBLIC_BASE_URL
+    value: https://dev-rakshana-hosierys--rakshana-hosierys.us-central1.hosted.app # Example dev URL
+
+  # --- Firebase Admin SDK Credentials (CRITICAL for server-side access to Firestore) ---
+  # This secret MUST contain the ENTIRE JSON content of your service account key file.
+  # Refer to previous instructions on how to obtain this JSON and create the secret.
+  # Make sure you have created this secret in Google Secret Manager and granted
+  # the 'firebase-app-hosting-compute@rakshana-hosierys.iam.gserviceaccount.com'
+  # service account the 'Secret Manager Secret Accessor' role on this secret.
+  - variable: GOOGLE_APPLICATION_CREDENTIALS
+    valueFrom:
+      secretKeyRef:
+        key: latest # Use 'latest' or a specific version like '1', '2', etc.
+        name: RAKSHANA_ADMIN_EMAIL # This secret must hold the full JSON key.
