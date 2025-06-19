@@ -13,7 +13,7 @@ if (!admin.apps.length) {
       // The projectId is often automatically inferred with applicationDefault(),
       // but explicitly providing it from a server-side environment variable
       // (without NEXT_PUBLIC_) can be a good fallback or for clarity.
-      projectId: process.env.FIREBASE_PROJECT_ID // Use regular env variable for server-side
+      projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID // Use regular env variable for server-side
     });
     console.log("Firebase Admin SDK initialized successfully with applicationDefault.");
   } catch (error) {
