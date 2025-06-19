@@ -27,5 +27,3 @@ env:
     value: https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/status
   - variable: NEXT_PUBLIC_BASE_URL
     value: https://dev-rakshana-hosierys--rakshana-hosierys.us-central1.hosted.app
-  - variable: GOOGLE_APPLICATION_CREDENTIALS
-    secret: RAKSHANA_ADMIN_EMAIL
