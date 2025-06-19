@@ -66,6 +66,7 @@ export default function OrderProcessingPage() {
       });
 
       const data = await response.json();
+      console.log(data);
 
       if (response.ok && data.redirectUrl) {
         // Redirect user to PhonePe gateway
@@ -93,7 +94,7 @@ export default function OrderProcessingPage() {
         // For simplicity, we'll try to initiate again, or let the callback handle it.
         // Or perhaps even redirect to orders if status is 'Initiated' and some time has passed.
     }
-    if (order && !loading && !error && order.paymentStatus === 'Completed') {
+    if (order && !loading && !error && order.paymentStatus === 'Paid') {
         router.replace(`/my-account-orders-details/${order.id}`);
     }
     if (order && !loading && !error && order.paymentStatus === 'Failed') {

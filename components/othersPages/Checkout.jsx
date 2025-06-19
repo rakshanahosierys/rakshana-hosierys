@@ -28,7 +28,7 @@ export default function Checkout() {
     pinCode: "",
     address: "",
     phone: "",
-    paymentMethod: "delivery",
+    paymentMethod: "bank",
   });
   const { cartProducts, setCartProducts, totalPrice, orderNotes, setOrderNotes } = useContextElement();
   const { user, loading: authLoading, isAuthenticated } = useAuth();
@@ -152,7 +152,7 @@ export default function Checkout() {
           phone: "",
           state: "",
           pinCode: "",
-          paymentMethod: "delivery",
+          paymentMethod: "bank",
         });
         setUserAddresses([]);
         setSelectedAddressId("new");
@@ -663,7 +663,7 @@ export default function Checkout() {
                   <h6 className="total fw-5">₹ {finalPrice.toFixed(2)} INR</h6>
                 </div>
                 <div className="wd-check-payment">
-                  {/* <div className="fieldset-radio mb_20">
+                  <div className="fieldset-radio mb_20">
                     <input
                       required
                       type="radio"
@@ -673,8 +673,8 @@ export default function Checkout() {
                       checked={formData.paymentMethod === "bank"}
                       onChange={handlePaymentChange}
                     />
-                    <label htmlFor="bank">Direct bank transfer</label>
-                  </div> */}
+                    <label htmlFor="bank">Phone Pe</label>
+                  </div>
                   <div className="fieldset-radio mb_20">
                     <input
                       required

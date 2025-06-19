@@ -1,4 +1,5 @@
 const functions = require('firebase-functions/v1');
+const { onCall } = require('firebase-functions/v2/https'); // For callable functions
 const admin = require('firebase-admin');
 const next = require("next");
 
@@ -36,7 +37,7 @@ const db = admin.firestore(); // Get a reference to the Firestore database
  * @param {string} [data.couponCode] - Optional coupon code entered by the user.
  * @param {Object} context - The context of the call, including authentication information.
  */
-exports.processSecureCheckout = functions.https.onCall(async (data, context) => {
+exports.processSecureCheckout = onCall(async (data, context) => {
     console.log("processSecureCheckout function called.");
 
     // 1. Authentication Check
@@ -197,7 +198,7 @@ exports.processSecureCheckout = functions.https.onCall(async (data, context) => 
             paymentMethod: paymentMethod,
             notes: notes || null,
             orderStatus: "Pending", // Initial status
-            paymentStatus: paymentMethod === "delivery" ? "COD" : "Pending", // COD or Pending for bank transfer
+            paymentStatus: paymentMethod === "delivery" ? "Paid" : "Pending", // COD or Pending for bank transfer
             createdAt: admin.firestore.FieldValue.serverTimestamp(),
             updatedAt: admin.firestore.FieldValue.serverTimestamp(),
         };
@@ -288,7 +289,11 @@ exports.sendOrderConfirmationEmail = functions
     
     const orderTotal = orderData.finalAmount; 
     const products = orderData.products;
-    const paymentMethod = orderData.paymentMethod;
+    const paymentMethod = orderData.paymentMethod === 'delivery'
+                        ? 'COD'
+                        : orderData?.paymentMethod === 'bank'
+                        ? 'Online'
+                        : 'N/A';
     const paymentStatus = orderData.paymentStatus;
     const orderStatus = orderData.orderStatus;
     const notes = orderData.notes;
@@ -305,7 +310,7 @@ exports.sendOrderConfirmationEmail = functions
     // --- Email to Admin ---
     const msgToAdmin = {
       to: adminEmail, 
-      from: 'admin@rakshanahosierys.in', // <<--- IMPORTANT: REPLACE THIS with your SendGrid verified sender email (must be verified in SendGrid)
+      from: 'info@rakshanahosierys.in', // <<--- IMPORTANT: REPLACE THIS with your SendGrid verified sender email (must be verified in SendGrid)
       subject: `📢 New Order Alert: #${orderId} by ${customerName}`,
       html: `
         <p>Hello Admin,</p>
@@ -335,7 +340,7 @@ exports.sendOrderConfirmationEmail = functions
         </ul>
         
         <p>Please log in to your admin panel to review and process this order promptly.</p>
-        <p>Thanks,<br>Your Website Order System</p>
+        <p>Thanks,<br>Rakshana Hosierys Order System</p>
       `,
     };
 
