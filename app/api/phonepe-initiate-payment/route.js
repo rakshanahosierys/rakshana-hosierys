@@ -8,9 +8,7 @@ import CryptoJS from 'crypto-js'; // For SHA256 hashing
 const PHONEPE_MERCHANT_ID = process.env.PHONEPE_MERCHANT_ID;
 const PHONEPE_SALT_KEY = process.env.PHONEPE_SALT_KEY;
 const PHONEPE_SALT_INDEX = process.env.PHONEPE_SALT_INDEX || '1';
-
 const PHONEPE_PAY_API_URL = process.env.PHONEPE_PAY_API_URL;
-
 const NEXT_PUBLIC_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 export async function POST(request) {
