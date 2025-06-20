@@ -29,3 +29,7 @@ env:
     value: https://dev-rakshana-hosierys--rakshana-hosierys.us-central1.hosted.app
   - variable: PHONEPE_AUTH_TOKEN_URL
     value: https://api-preprod.phonepe.com/apis/pg-sandbox/v1/oauth/token
+  - variable: PHONEPE_WEBHOOK_USERNAME
+    secret: phonepe-webhook-username
+  - variable: PHONEPE_WEBHOOK_PASSWORD
+    secret: phonepe-webhook-password
