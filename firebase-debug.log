@@ -140,3 +140,44 @@ Java HotSpot(TM) 64-Bit Server VM (build 22.0.2+9-70, mixed mode, sharing)
 [info] Serving at port 8747
 
 [debug] [2025-06-20T09:49:09.352Z] Got response from /__/functions.yaml {"endpoints":{"processSecureCheckout":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","labels":{},"callableTrigger":{},"entryPoint":"processSecureCheckout"},"sendOrderConfirmationEmail":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"secretEnvironmentVariables":[{"key":"SENDGRID_API_KEY"},{"key":"RAKSHANA_ADMIN_EMAIL"}],"eventTrigger":{"eventType":"providers/cloud.firestore/eventTypes/document.create","eventFilters":{"resource":"projects/rakshana-hosierys/databases/(default)/documents/orders/{orderId}"},"retry":false},"labels":{},"entryPoint":"sendOrderConfirmationEmail"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{}}
+[debug] [2025-06-20T09:49:14.375Z] defaultcredentials: writing to file C:\Users\SAC\AppData\Roaming\firebase\rakshanahosierys_gmail_com_application_default_credentials.json
+[debug] [2025-06-20T09:49:14.375Z] Setting GAC to C:\Users\SAC\AppData\Roaming\firebase\rakshanahosierys_gmail_com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to C:\\Users\\SAC\\AppData\\Roaming\\firebase\\rakshanahosierys_gmail_com_application_default_credentials.json"}}
+[info] +  functions: Loaded functions definitions from source: processSecureCheckout, sendOrderConfirmationEmail. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: processSecureCheckout, sendOrderConfirmationEmail."}}
+[info] +  functions[us-central1-processSecureCheckout]: http function initialized (http://127.0.0.1:5001/rakshana-hosierys/us-central1/processSecureCheckout). {"metadata":{"emulator":{"name":"functions"},"message":"\u001b[1mhttp\u001b[22m function initialized (http://127.0.0.1:5001/rakshana-hosierys/us-central1/processSecureCheckout)."}}
+[debug] [2025-06-20T09:49:14.379Z] addFirestoreTrigger "{\"eventTrigger\":{\"eventType\":\"providers/cloud.firestore/eventTypes/document.create\",\"resource\":\"projects/rakshana-hosierys/databases/(default)/documents/orders/{orderId}\",\"service\":\"firestore.googleapis.com\"}}"
+[debug] [2025-06-20T09:49:14.379Z] >>> [apiv2][query] PUT http://127.0.0.1:8080/emulator/v1/projects/rakshana-hosierys/triggers/us-central1-sendOrderConfirmationEmail-0 [none]
+[debug] [2025-06-20T09:49:14.379Z] >>> [apiv2][body] PUT http://127.0.0.1:8080/emulator/v1/projects/rakshana-hosierys/triggers/us-central1-sendOrderConfirmationEmail-0 "{\"eventTrigger\":{\"eventType\":\"providers/cloud.firestore/eventTypes/document.create\",\"resource\":\"projects/rakshana-hosierys/databases/(default)/documents/orders/{orderId}\",\"service\":\"firestore.googleapis.com\"}}"
+[debug] [2025-06-20T09:49:15.133Z] <<< [apiv2][status] PUT http://127.0.0.1:8080/emulator/v1/projects/rakshana-hosierys/triggers/us-central1-sendOrderConfirmationEmail-0 200
+[debug] [2025-06-20T09:49:15.133Z] <<< [apiv2][body] PUT http://127.0.0.1:8080/emulator/v1/projects/rakshana-hosierys/triggers/us-central1-sendOrderConfirmationEmail-0 {}
+[info] +  functions[us-central1-sendOrderConfirmationEmail]: firestore function initialized. {"metadata":{"emulator":{"name":"functions"},"message":"\u001b[1mfirestore\u001b[22m function initialized."}}
+[debug] [2025-06-20T09:49:15.137Z] Could not find VSCode notification endpoint: FetchError: request to http://localhost:40001/vscode/notify failed, reason: . If you are not running the Firebase Data Connect VSCode extension, this is expected and not an issue.
+[info] 
+┌─────────────────────────────────────────────────────────────┐
+│ ✔  All emulators ready! It is now safe to connect your app. │
+│ i  View Emulator UI at http://127.0.0.1:4000/               │
+└─────────────────────────────────────────────────────────────┘
+
+┌────────────────┬────────────────┬──────────────────────────────────┐
+│ Emulator       │ Host:Port      │ View in Emulator UI              │
+├────────────────┼────────────────┼──────────────────────────────────┤
+│ App Hosting    │ localhost:5002 │ n/a                              │
+├────────────────┼────────────────┼──────────────────────────────────┤
+│ Authentication │ 127.0.0.1:9099 │ http://127.0.0.1:4000/auth       │
+├────────────────┼────────────────┼──────────────────────────────────┤
+│ Functions      │ 127.0.0.1:5001 │ http://127.0.0.1:4000/functions  │
+├────────────────┼────────────────┼──────────────────────────────────┤
+│ Firestore      │ 127.0.0.1:8080 │ http://127.0.0.1:4000/firestore  │
+├────────────────┼────────────────┼──────────────────────────────────┤
+│ Hosting        │ 127.0.0.1:5000 │ n/a                              │
+├────────────────┼────────────────┼──────────────────────────────────┤
+│ Storage        │ 127.0.0.1:9199 │ http://127.0.0.1:4000/storage    │
+├────────────────┼────────────────┼──────────────────────────────────┤
+│ Extensions     │ 127.0.0.1:5001 │ http://127.0.0.1:4000/extensions │
+└────────────────┴────────────────┴──────────────────────────────────┘
+  Emulator Hub host: 127.0.0.1 port: 4400
+  Other reserved ports: 4500, 9150
+┌─────────────────────────┬───────────────┬─────────────────────┐
+│ Extension Instance Name │ Extension Ref │ View in Emulator UI │
+└─────────────────────────┴───────────────┴─────────────────────┘
+Issues? Report them at https://github.com/firebase/firebase-tools/issues and attach the *-debug.log files.
+ 
