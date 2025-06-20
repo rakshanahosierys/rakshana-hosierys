@@ -47,16 +47,32 @@ export async function POST(request) {
         const phonePeMerchantOrderId = `PPO_${orderId}_${Date.now()}`; // Example: PhonePe Order ID + timestamp
 
         // 1. Get Access Token from your new API route
-        const tokenResponse = await fetch(`${NEXT_PUBLIC_BASE_URL}/api/phonepe-auth-token`, {
+        const tokenFetchUrl = `${NEXT_PUBLIC_BASE_URL}/api/phonepe-auth-token`;
+        console.log("Attempting to fetch token from:", tokenFetchUrl);
+        const tokenResponse = await fetch(tokenFetchUrl, {
             method: 'POST', // Call your internal token acquisition API route
         });
+
+        // --- NEW LOGGING ADDED HERE ---
+        console.log("Token API Response Status:", tokenResponse.status);
+        console.log("Token API Response Status Text:", tokenResponse.statusText);
+        if (!tokenResponse.ok) {
+            const errorText = await tokenResponse.text();
+            console.error("Raw Token API Error Response (HTML/Text):", errorText.substring(0, 500) + "..."); // Log first 500 chars
+            return NextResponse.json(
+                { message: 'Failed to acquire PhonePe access token (internal API error).', details: `Status: ${tokenResponse.status}, Details: ${errorText.substring(0, 200)}...` },
+                { status: 500 }
+            );
+        }
+        // --- END NEW LOGGING ---
+
         const tokenData = await tokenResponse.json();
 
-        if (!tokenResponse.ok || !tokenData.accessToken) {
-            console.error("Failed to get access token from internal API:", tokenData);
+        if (!tokenData.accessToken) {
+            console.error("Failed to get access token from internal API (no accessToken in response):", tokenData);
             return NextResponse.json(
-                { message: 'Failed to acquire PhonePe access token for payment initiation.', details: tokenData.details || 'Unknown token error.' },
-                { status: tokenResponse.status }
+                { message: 'Failed to acquire PhonePe access token (missing token).', details: tokenData.details || 'Unknown token error.' },
+                { status: 500 }
             );
         }
         const accessToken = tokenData.accessToken;
@@ -76,7 +92,7 @@ export async function POST(request) {
         const paymentPayload = {
             merchantOrderId: phonePeMerchantOrderId, // As per /checkout/v2/pay documentation
             amount: amountInPaisa,
-            expireAfter: 1200, // Optional: 1200 seconds (20 minutes), Min=300, Max=3600
+            expireAfter: 300, // Optional: 1200 seconds (20 minutes), Min=300, Max=3600
             metaInfo: {
                 udf1: orderId, // Can pass original order ID here for your reference
                 udf2: orderData.userId, // Customer user ID

@@ -2,9 +2,6 @@
 import { NextResponse } from 'next/server';
 import { adminDb, admin } from '@/utlis/firebaseAdmin'; // Correct: Import Admin SDK
 
-// Removed CryptoJS as checksum verification for incoming OAuth callbacks is not salt-based
-// Removed PHONEPE_SALT_KEY and PHONEPE_SALT_INDEX as they are not used for this authentication flow
-
 // Ensure these are defined in your environment variables (e.g., .env.local for dev, hosting provider for prod)
 const PHONEPE_MERCHANT_ID = process.env.PHONEPE_MERCHANT_ID; // Used for status check URL, might be in callback body
 const PHONEPE_STATUS_CHECK_API_URL = process.env.PHONEPE_STATUS_CHECK_API_URL;
@@ -38,20 +35,36 @@ export async function POST(request) {
         }
 
         // --- 3. Get Access Token for Server-to-Server Status Check ---
-        const tokenResponse = await fetch(`${NEXT_PUBLIC_BASE_URL}/api/phonepe-auth-token`, {
+        const tokenFetchUrl = `${NEXT_PUBLIC_BASE_URL}/api/phonepe-auth-token`;
+        console.log("Callback: Attempting to fetch token from:", tokenFetchUrl);
+        const tokenResponse = await fetch(tokenFetchUrl, {
             method: 'POST', // Call your internal token acquisition API
         });
-        const tokenData = await tokenResponse.json();
 
-        if (!tokenResponse.ok || !tokenData.accessToken) {
-            console.error("Failed to get access token from internal API for status check:", tokenData);
+        // --- NEW LOGGING ADDED HERE ---
+        console.log("Callback: Token API Response Status:", tokenResponse.status);
+        console.log("Callback: Token API Response Status Text:", tokenResponse.statusText);
+        if (!tokenResponse.ok) {
+            const errorText = await tokenResponse.text();
+            console.error("Callback: Raw Token API Error Response (HTML/Text):", errorText.substring(0, 500) + "..."); // Log first 500 chars
             return NextResponse.json(
-                { success: false, message: 'Failed to acquire PhonePe access token for status check.' },
+                { success: false, message: 'Failed to acquire PhonePe access token (internal API error during callback).', details: `Status: ${tokenResponse.status}, Details: ${errorText.substring(0, 200)}...` },
                 { status: tokenResponse.status || 500 }
             );
         }
+        // --- END NEW LOGGING ---
+
+        const tokenData = await tokenResponse.json();
+
+        if (!tokenData.accessToken) {
+            console.error("Callback: Failed to get access token from internal API (no accessToken in response):", tokenData);
+            return NextResponse.json(
+                { success: false, message: 'Failed to acquire PhonePe access token for status check (missing token).' },
+                { status: 500 }
+            );
+        }
         const accessToken = tokenData.accessToken;
-        console.log("PhonePe Access Token acquired for status check (first 10 chars):", accessToken.substring(0, 10) + "...");
+        console.log("Callback: PhonePe Access Token acquired for status check (first 10 chars):", accessToken.substring(0, 10) + "...");
 
 
         // --- 4. Server-to-Server Status Check (Crucial for Reliability) ---
@@ -59,7 +72,7 @@ export async function POST(request) {
         // The status check endpoint is typically /pg/v1/status/{merchantId}/{merchantTransactionId}
         // but now uses the OAuth Authorization header.
         const statusCheckUrl = `${PHONEPE_STATUS_CHECK_API_URL}/${PHONEPE_MERCHANT_ID}/${merchantOrderId}`;
-        console.log(`Performing status check on: ${statusCheckUrl}`);
+        console.log(`Callback: Performing status check on: ${statusCheckUrl}`);
 
         const statusResponse = await fetch(statusCheckUrl, {
             method: 'GET', // PhonePe's /pg/v1/status endpoint is typically GET
@@ -71,7 +84,7 @@ export async function POST(request) {
         });
 
         const statusData = await statusResponse.json();
-        console.log("PhonePe Status API Response:", JSON.stringify(statusData, null, 2));
+        console.log("Callback: PhonePe Status API Response:", JSON.stringify(statusData, null, 2));
 
         let newPaymentStatus;
         if (statusData.success && statusData.code === 'PAYMENT_SUCCESS') {
@@ -95,7 +108,7 @@ export async function POST(request) {
             // paymentGateway: 'PhonePe',
             // amountPaid: statusData.data.amount / 100, // Convert paisa back to INR if needed
         });
-        console.log(`Order ${originalOrderId} payment status updated to: ${newPaymentStatus}`);
+        console.log(`Callback: Order ${originalOrderId} payment status updated to: ${newPaymentStatus}`);
 
         // --- 6. Respond to PhonePe (typical webhook) ---
         // For a typical webhook, you should respond with a 200 OK to PhonePe's server.
