@@ -20,7 +20,7 @@ env:
   - variable: PHONEPE_CLIENT_ID
     secret: PHONEPE_CLIENT_ID
   - variable: PHONEPE_CLIENT_SECRET
-    value: PHONEPE_CLIENT_SECRET
+    secret: PHONEPE_CLIENT_SECRET
   - variable: PHONEPE_PAY_API_URL
     value: https://api-preprod.phonepe.com/apis/pg-sandbox/checkout/v2/pay
   - variable: PHONEPE_STATUS_CHECK_API_URL
