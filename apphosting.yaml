@@ -17,13 +17,15 @@ env:
     value: G-X7J7GJ2VC7
   - variable: PHONEPE_MERCHANT_ID
     secret: PHONEPE_MERCHANT_ID
-  - variable: PHONEPE_SALT_KEY
-    secret: PHONEPE_SALT_KEY
-  - variable: PHONEPE_SALT_INDEX
-    value: 1
+  - variable: PHONEPE_CLIENT_ID
+    secret: PHONEPE_CLIENT_ID
+  - variable: PHONEPE_CLIENT_SECRET
+    value: PHONEPE_CLIENT_SECRET
   - variable: PHONEPE_PAY_API_URL
-    value: https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay
+    value: https://api-preprod.phonepe.com/apis/pg-sandbox/checkout/v2/pay
   - variable: PHONEPE_STATUS_CHECK_API_URL
     value: https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/status
   - variable: NEXT_PUBLIC_BASE_URL
     value: https://dev-rakshana-hosierys--rakshana-hosierys.us-central1.hosted.app
+  - variable: PHONEPE_AUTH_TOKEN_URL
+    value: https://api-preprod.phonepe.com/apis/pg-sandbox/v1/oauth/token
